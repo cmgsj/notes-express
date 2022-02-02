@@ -5,8 +5,7 @@ import ReadWriteNote from '../components/notes/ReadWriteNote';
 import ErrorModal from '../components/UI/ErrorModal';
 import styles from './Guest.module.css';
 
-const backendURL =
-  'http://192.168.0.13:8000/api' || process.env.REACT_APP_BACKEND_URL;
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 const Guest = () => {
   const params = useParams();
