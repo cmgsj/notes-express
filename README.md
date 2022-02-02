@@ -1,7 +1,7 @@
 # Note-Taking App
 
 ## Developed with:
--MERN full-stack.
+- MERN full-stack.
 
 ## Screenshots
 <img src='/screenshots/1-home-screen.png' height='400' width='400' /> <img src='/screenshots/2-game-config.png' height='400' width='400' />
