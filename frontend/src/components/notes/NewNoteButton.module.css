@@ -1,0 +1,15 @@
+.menu {
+  border-radius: 15px;
+}
+
+.menu button {
+  padding: 0 0.6rem;
+  border-radius: 25px;
+  border: 1px solid black;
+  min-width: 2rem;
+  font-size: 2rem;
+  font-family: monospace;
+  font-weight: bold;
+  position: absolute;
+  right: 1rem;
+}

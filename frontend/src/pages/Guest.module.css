@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.note {
+  width: 70%;
+}
+.top {
+  height: 3rem;
+  text-align: center;
+  color: white;
+  background-color: teal;
+}
+.top h2 {
+  margin: 0;
+  padding: 0.5rem;
+}

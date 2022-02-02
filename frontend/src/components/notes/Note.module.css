@@ -1,0 +1,37 @@
+.note {
+  border-radius: 15px;
+  border: 3px solid black;
+  margin: 1rem;
+  background-color: rgb(241, 240, 240);
+  -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;
+}
+
+.note h1 {
+  margin: 1rem;
+}
+
+.note p {
+  margin: 1rem;
+  border: 0.1px solid black;
+  border-radius: 15px;
+  height: 3.5rem;
+  padding: 0.75rem 0.75rem;
+}
+
+.buttons {
+  margin: 1rem;
+  text-align: right;
+}
+.buttons button {
+  margin-left: 0.5rem;
+  border: 0.1px solid;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.buttons button:hover,
+.buttons button:active {
+  background-color: white;
+}
