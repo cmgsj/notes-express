@@ -10,6 +10,7 @@
 <img src='/screenshots/7-game-won.png' height='400' width='400' /> <img src='/screenshots/8-game-lost.png' height='400' width='400' />
 
 ## Features
+
 - Customize your new game's number of rows, columns and mines.
 - Guaranty that there will be no mine on the first tile you click.
 - When a zero tile is clicked, all adjacent zero tiles will show.
@@ -19,5 +20,5 @@
   - Center: Reset button that loads a new game with the previously selected configuration.
   - Right: Timer that starts counting strating on the first tile clicked.
 - When the game is finished:
-    - Home button to go home and select a new game cofiguration.
-    - Play again button that loads a new game with the previously selected configuration.
+  - Home button to go home and select a new game cofiguration.
+  - Play again button that loads a new game with the previously selected configuration.
