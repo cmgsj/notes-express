@@ -4,7 +4,7 @@
 - MERN full-stack.
 
 ## Screenshots
-<h3>Login<h3> 
+<h3>Login<h3>                                                 <h3>Sign Up<h3> 
 <img src='/screenshots/login.png' height='300' width='400' /> <img src='/screenshots/sign-up.png' height='300' width='400' />
 <img src='/screenshots/notes.png' height='300' width='400' /> <img src='/screenshots/new-note.png' height='300' width='400' />
 <img src='/screenshots/edit.png' height='300' width='400' /> <img src='/screenshots/delete.png' height='300' width='400' />
