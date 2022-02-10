@@ -4,11 +4,11 @@
 - MERN full-stack.
 
 ## Screenshots
-<img src='/screenshots/login.png' height='400' width='400' /> <img src='/screenshots/sign-up.png' height='400' width='400' />
-<img src='/screenshots/notes.png' height='400' width='400' /> <img src='/screenshots/new-note.png' height='400' width='400' />
-<img src='/screenshots/edit.png' height='400' width='400' /> <img src='/screenshots/delete.png' height='400' width='400' />
-<img src='/screenshots/share.png' height='400' width='400' /> <img src='/screenshots/loading.png' height='400' width='400' />
-<img src='/screenshots/error.png' height='400' width='400' />
+<img src='/screenshots/login.png' height='300' width='400' /> <img src='/screenshots/sign-up.png' height='300' width='400' />
+<img src='/screenshots/notes.png' height='300' width='400' /> <img src='/screenshots/new-note.png' height='300' width='400' />
+<img src='/screenshots/edit.png' height='300' width='400' /> <img src='/screenshots/delete.png' height='300' width='400' />
+<img src='/screenshots/share.png' height='300' width='400' /> <img src='/screenshots/loading.png' height='300' width='400' />
+<img src='/screenshots/error.png' height='300' width='400' />
 
 ## Features
 
