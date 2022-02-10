@@ -17,7 +17,7 @@ exports.signup = async (req, res, next) => {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
     return next(
-      new HttpError('Signing up failed, please try again later.', 500)
+      new HttpError('Signing up failed, please try again.', 500)
     );
   }
   if (existingUser) {

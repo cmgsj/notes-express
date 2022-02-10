@@ -20,7 +20,7 @@ exports.getNotes = async (req, res, next) => {
   //   return next(new HttpError('Could not find notes for provided user.', 404));
   // }
   res.json({
-    message: 'Notes fetched succesfully,',
+    message: 'Notes fetched succesfully.',
     notes: user.notes.map((note) => note.toObject({ getters: true })),
   });
 };
@@ -46,7 +46,7 @@ exports.createNote = async (req, res, next) => {
     //   note: note,
     // });
   } catch (err) {
-    return next(new HttpError('Creating note failed, please try again', 500));
+    return next(new HttpError('Creating note failed, please try again.', 500));
   }
   if (!user) {
     return next(new HttpError('Could not find user for provided id', 404));
@@ -62,7 +62,7 @@ exports.createNote = async (req, res, next) => {
     return next(new HttpError('Creating note failed, please try again.', 500));
   }
   res.status(201).json({
-    message: 'Note created successfully!',
+    message: 'Note created successfully.',
     note: newNote.toObject({ getters: true }),
   });
 };
