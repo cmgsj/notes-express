@@ -4,10 +4,11 @@
 - MERN full-stack.
 
 ## Screenshots
-<img src='/screenshots/1-home-screen.png' height='400' width='400' /> <img src='/screenshots/2-game-config.png' height='400' width='400' />
-<img src='/screenshots/3-game-in-progress-1.png' height='400' width='400' /> <img src='/screenshots/4-game-in-progress-2.png' height='400' width='400' />
-<img src='/screenshots/5-game-in-progress-3.png' height='400' width='400' /> <img src='/screenshots/6-game-in-progress-4.png' height='400' width='400' />
-<img src='/screenshots/7-game-won.png' height='400' width='400' /> <img src='/screenshots/8-game-lost.png' height='400' width='400' />
+<img src='/screenshots/login.png' height='400' width='400' /> <img src='/screenshots/sign-up.png' height='400' width='400' />
+<img src='/screenshots/notes.png' height='400' width='400' /> <img src='/screenshots/new-note.png' height='400' width='400' />
+<img src='/screenshots/edit.png' height='400' width='400' /> <img src='/screenshots/delete.png' height='400' width='400' />
+<img src='/screenshots/share.png' height='400' width='400' /> <img src='/screenshots/loading.png' height='400' width='400' />
+<img src='/screenshots/error.png' height='400' width='400' />
 
 ## Features
 
