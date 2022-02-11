@@ -16,9 +16,7 @@ exports.signup = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    return next(
-      new HttpError('Signing up failed, please try again.', 500)
-    );
+    return next(new HttpError('Signing up failed, please try again.', 500));
   }
   if (existingUser) {
     return next(
@@ -29,7 +27,7 @@ exports.signup = async (req, res, next) => {
   try {
     hashedPassword = await bcrypt.hash(password, 12);
   } catch (error) {
-    return next(new Error('Could not create user, plase try again.', 500));
+    return next(new HttpError('Could not create user, plase try again.', 500));
   }
   const createdUser = new User({
     name,
@@ -78,7 +76,7 @@ exports.login = async (req, res, next) => {
   try {
     isValidPassword = await bcrypt.compare(password, existingUser.password);
   } catch (error) {
-    return next(new Error('Could not log you in, please try again.', 500));
+    return next(new HttpError('Could not log you in, please try again.', 500));
   }
   if (!isValidPassword) {
     return next(
