@@ -40,11 +40,6 @@ exports.createNote = async (req, res, next) => {
   let user;
   try {
     user = await User.findById(userId);
-    // await note.save();
-    // res.status(201).json({
-    //   message: 'Note created successfully!',
-    //   note: note,
-    // });
   } catch (err) {
     return next(new HttpError('Creating note failed, please try again.', 500));
   }
