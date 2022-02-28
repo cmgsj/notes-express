@@ -1,14 +1,11 @@
-import React from 'react';
-import NewNoteButton from '../components/notes/NewNoteButton';
-import Layout from '../components/layout/Layout';
+import { Fragment } from 'react';
 import NotesList from '../components/notes/NotesList';
 
 const Home = () => {
   return (
-    <Layout>
-      <NewNoteButton />
+    <Fragment>
       <NotesList />
-    </Layout>
+    </Fragment>
   );
 };
 

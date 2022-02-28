@@ -1,15 +1,13 @@
-.menu {
-  border-radius: 15px;
-}
-
-.menu button {
+.new {
   padding: 0 0.6rem;
   border-radius: 25px;
-  border: 1px solid black;
-  min-width: 2rem;
+  border: 1px solid transparent;
   font-size: 2rem;
   font-family: monospace;
   font-weight: bold;
   position: absolute;
   right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  color: white;
 }

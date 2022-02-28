@@ -45,11 +45,14 @@ const Note = (props) => {
         <div className={styles.note}>
           <h1>{props.title}</h1>
           <p>{props.content}</p>
-          <div className={styles.buttons}>
-            <button onClick={toggleIsEditingHandler}>✏️</button>
-            <button onClick={toggleIsSharingHandler}>↗️</button>
-            <button onClick={toggleIsDeletingHandler}>🗑</button>
-          </div>
+          <section>
+            <span>{new Date(props.updatedAt).toLocaleString()}</span>
+            <div className={styles.buttons}>
+              <button onClick={toggleIsEditingHandler}>✏️</button>
+              <button onClick={toggleIsSharingHandler}>↗️</button>
+              <button onClick={toggleIsDeletingHandler}>🗑</button>
+            </div>
+          </section>
           {isDeleting && (
             <DeleteNoteForm
               onCancel={toggleIsDeletingHandler}

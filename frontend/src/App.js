@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { userActions } from './redux/user';
 import Home from './pages/Home';
 import Auth from './pages/Auth';
+import Guest from './pages/Guest';
+import Layout from './components/layout/Layout';
 import LoadingSpinner from './components/UI/LoadingSpinner';
 import ErrorModal from './components/UI/ErrorModal';
-import Guest from './pages/Guest';
 // const Home = React.lazy(() => import('./pages/Home'));
 // const Auth = React.lazy(() => import('./pages/Auth'));
 
@@ -82,9 +83,11 @@ const App = () => {
   }
   return (
     <Fragment>
-      {isLoading && <LoadingSpinner asOverlay />}
+      <LoadingSpinner show={isLoading} asOverlay />
       <ErrorModal error={error} onClear={clearErrorHandler} />
-      <Router>{routes}</Router>
+      <Layout>
+        <Router>{routes}</Router>
+      </Layout>
     </Fragment>
   );
 };

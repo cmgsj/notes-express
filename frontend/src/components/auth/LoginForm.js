@@ -21,7 +21,7 @@ const LoginForm = () => {
   return (
     <form className={styles.form} onSubmit={submitLoginFormHandler}>
       <h2>Login</h2>
-      <label>Email address</label>
+      <label>Email</label>
       <input type='email' ref={emailRef} placeholder='email' />
       <label>Password</label>
       <input type='password' ref={passwordRef} placeholder='password' />

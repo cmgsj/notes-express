@@ -82,7 +82,7 @@ const userSlice = createSlice({
     [loadNotes.pending]: loadingStateHandler,
     [loadNotes.rejected]: errorStateHandler,
     [loadNotes.fulfilled]: (state, action) => {
-      state.notes = action.payload.notes;
+      state.notes = action.payload.notes.reverse();
       state.isLoading = false;
     },
     // createNote

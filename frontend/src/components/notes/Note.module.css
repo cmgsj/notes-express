@@ -12,6 +12,19 @@
   margin: 1rem;
 }
 
+.note section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.note span {
+  font-size: small;
+  font-weight: bold;
+  align-self: flex-start;
+  margin: 1rem;
+  color: gray;
+}
+
 .note p {
   margin: 1rem;
   border: 0.1px solid black;
@@ -22,7 +35,7 @@
 
 .buttons {
   margin: 1rem;
-  text-align: right;
+  align-self: flex-end;
 }
 .buttons button {
   margin-left: 0.5rem;

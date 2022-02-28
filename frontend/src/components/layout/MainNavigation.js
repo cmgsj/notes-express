@@ -1,10 +1,11 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../redux/user';
 import styles from './MainNavigation.module.css';
 
 const MainNavigation = () => {
   const dispatch = useDispatch();
   const { logout } = userActions;
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -17,9 +18,11 @@ const MainNavigation = () => {
           <h1 className={styles.text}>Notes</h1>
         </div>
         <div>
-          <button className={styles.menu_button} onClick={logoutHandler}>
-            Logout
-          </button>
+          {isLoggedIn && (
+            <button className={styles.menu_button} onClick={logoutHandler}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </header>

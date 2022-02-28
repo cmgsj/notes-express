@@ -15,17 +15,15 @@ const ActionBar = () => {
 
   return (
     <Fragment>
-      <div className={styles.menu}>
-        <button
-          onClick={toggleFormHandler}
-          style={{
-            color: 'white',
-            backgroundColor: showForm ? 'red' : 'dodgerblue',
-          }}
-        >
-          {showForm ? '-' : '+'}
-        </button>
-      </div>
+      <button
+        className={styles.new}
+        onClick={toggleFormHandler}
+        style={{
+          backgroundColor: showForm ? 'red' : 'dodgerblue',
+        }}
+      >
+        {showForm ? '−' : '+'}
+      </button>
       {showForm && (
         <NewNoteForm
           onSubmit={noteCreatedHandler}

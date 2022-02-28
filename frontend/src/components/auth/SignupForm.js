@@ -32,7 +32,7 @@ const SignupForm = () => {
       <label>Email</label>
       <input type='email' ref={emailRef} placeholder='email' />
       <label>Password</label>
-      <input type='password' ref={passwordRef} placeholder='passwrd' />
+      <input type='password' ref={passwordRef} placeholder='password' />
       <label>Confirm Password</label>
       <input
         type='password'
