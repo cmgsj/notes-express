@@ -7,6 +7,16 @@ const usersRoutes = require('./routes/users');
 const sharedNotesRoutes = require('./routes/shared-notes');
 require('dotenv').config();
 
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE_URL);
+    app.listen(process.env.PORT);
+    console.log(`Listening to port ${process.env.PORT}.`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -38,14 +48,4 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || 'An unknown error occurred.' });
 });
 
-mongoose
-  .connect(
-    `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.7bddq.mongodb.net/${process.env.MONGODB_DATABASE_NAME}?retryWrites=true&w=majority`
-  )
-  .then((result) => {
-    app.listen(process.env.PORT);
-    console.log(`Listening to port ${process.env.PORT}.`);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+startServer();
