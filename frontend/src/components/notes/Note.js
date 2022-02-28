@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { editNote, shareNote, deleteNote } from '../../redux/user';
+import { editNote, shareNote, deleteNote } from '../../redux/userAsyncThunks';
 import EditNoteForm from './EditNoteForm';
 import ShareNoteForm from './ShareNoteForm';
 import DeleteNoteForm from './DeleteNoteForm';

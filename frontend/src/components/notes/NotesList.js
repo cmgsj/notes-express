@@ -2,7 +2,7 @@ import React from 'react';
 import Note from './Note';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadNotes } from '../../redux/user';
+import { loadNotes } from '../../redux/userAsyncThunks';
 
 const NotesList = () => {
   const dispatch = useDispatch();

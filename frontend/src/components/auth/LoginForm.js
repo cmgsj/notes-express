@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { fetchLogin } from '../../redux/user';
+import { fetchLogin } from '../../redux/userAsyncThunks';
 import styles from './AuthForm.module.css';
 
 const LoginForm = () => {

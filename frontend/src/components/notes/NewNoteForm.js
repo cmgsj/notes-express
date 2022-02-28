@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { createNote } from '../../redux/user';
+import { createNote } from '../../redux/userAsyncThunks';
 import styles from './NewNoteForm.module.css';
 
 const NewNoteForm = (props) => {
