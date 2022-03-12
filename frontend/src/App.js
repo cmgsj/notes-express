@@ -13,6 +13,7 @@ import Guest from './pages/Guest';
 import Layout from './components/layout/Layout';
 import LoadingSpinner from './components/UI/LoadingSpinner';
 import ErrorModal from './components/UI/ErrorModal';
+import ResetPassword from './pages/ResetPassword';
 // const Home = React.lazy(() => import('./pages/Home'));
 // const Auth = React.lazy(() => import('./pages/Auth'));
 
@@ -74,6 +75,9 @@ const App = () => {
         </Route>
         <Route exact path='/guest/:token'>
           <Guest />
+        </Route>
+        <Route exact path='/reset_password'>
+          <ResetPassword />
         </Route>
         <Route path='*'>
           <Redirect to='/auth' />

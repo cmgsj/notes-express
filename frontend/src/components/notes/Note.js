@@ -11,6 +11,7 @@ const Note = (props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
+  const [showDates, setShowDates] = useState(false);
 
   const toggleIsEditingHandler = () => {
     setIsEditing((prevState) => !prevState);
@@ -22,6 +23,10 @@ const Note = (props) => {
 
   const toggleIsDeletingHandler = () => {
     setIsDeleting((prevState) => !prevState);
+  };
+
+  const toggleShowDatesHandler = () => {
+    setShowDates((prevState) => !prevState);
   };
 
   const submitEditNoteHandler = (title, content) => {
@@ -46,8 +51,18 @@ const Note = (props) => {
           <h1>{props.title}</h1>
           <p>{props.content}</p>
           <section>
-            <span>{new Date(props.updatedAt).toLocaleString()}</span>
+            <section>
+              <span>
+                {showDates &&
+                  'Updated: ' + new Date(props.updatedAt).toLocaleString()}
+              </span>
+              <span>
+                {showDates &&
+                  'Created: ' + new Date(props.createdAt).toLocaleString()}
+              </span>
+            </section>
             <div className={styles.buttons}>
+              <button onClick={toggleShowDatesHandler}>●●●</button>
               <button onClick={toggleIsEditingHandler}>✏️</button>
               <button onClick={toggleIsSharingHandler}>↗️</button>
               <button onClick={toggleIsDeletingHandler}>🗑</button>

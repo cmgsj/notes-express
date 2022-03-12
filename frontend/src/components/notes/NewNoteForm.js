@@ -17,14 +17,20 @@ const NewNoteForm = (props) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={formSubmissionHandler}>
+    <form className={styles.newNote} onSubmit={formSubmissionHandler}>
       <input type='text' placeholder='Title' ref={titleRef} />
       <textarea placeholder='Text' ref={contentRef} />
       <div className={styles.buttons}>
-        <button type='button' onClick={props.onCancel}>
+        <button
+          className={styles.cancelButton}
+          type='button '
+          onClick={props.onCancel}
+        >
           Cancel
         </button>
-        <button type='submit'>Done</button>
+        <button className={styles.doneButton} type='submit'>
+          Done
+        </button>
       </div>
     </form>
   );

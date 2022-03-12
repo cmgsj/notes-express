@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchLogin } from '../../redux/userAsyncThunks';
 import styles from './AuthForm.module.css';
@@ -25,7 +25,12 @@ const LoginForm = () => {
       <input type='email' ref={emailRef} placeholder='email' />
       <label>Password</label>
       <input type='password' ref={passwordRef} placeholder='password' />
-      <button type='submit'>Submit</button>
+      <div className={styles.foot}>
+        <Link push to='/reset_password'>
+          reset password
+        </Link>
+        <button type='submit'>Submit</button>
+      </div>
     </form>
   );
 };

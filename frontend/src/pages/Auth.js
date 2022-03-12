@@ -14,7 +14,7 @@ const Auth = () => {
     <div className={styles.auth}>
       {showLogin ? <LoginForm /> : <SignupForm />}
       <button className={styles.switch_button} onClick={toggleLoginFormHandler}>
-        {`Switch to ${showLogin ? 'Create Account' : 'Login'}`}
+        {`${showLogin ? 'Create Account' : 'Login'}`}
       </button>
     </div>
   );
