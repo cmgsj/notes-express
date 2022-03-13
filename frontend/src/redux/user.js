@@ -50,6 +50,11 @@ const userSlice = createSlice({
       localStorage.removeItem('tokenExpirationDate');
       return initialState;
     },
+    setError: (state, action) => {
+      //isLoading???
+      state.isLoading = false;
+      state.error = action.payload.message;
+    },
     clearError: (state) => {
       state.error = null;
     },

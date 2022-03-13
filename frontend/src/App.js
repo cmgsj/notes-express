@@ -13,9 +13,8 @@ import Guest from './pages/Guest';
 import Layout from './components/layout/Layout';
 import LoadingSpinner from './components/UI/LoadingSpinner';
 import ErrorModal from './components/UI/ErrorModal';
+import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
-// const Home = React.lazy(() => import('./pages/Home'));
-// const Auth = React.lazy(() => import('./pages/Auth'));
 
 let logoutTimer;
 
@@ -77,6 +76,9 @@ const App = () => {
           <Guest />
         </Route>
         <Route exact path='/reset_password'>
+          <ForgotPassword />
+        </Route>
+        <Route exact path='/reset_password/:token'>
           <ResetPassword />
         </Route>
         <Route path='*'>

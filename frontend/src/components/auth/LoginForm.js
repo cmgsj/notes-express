@@ -27,7 +27,7 @@ const LoginForm = () => {
       <input type='password' ref={passwordRef} placeholder='password' />
       <div className={styles.foot}>
         <Link push to='/reset_password'>
-          reset password
+          forgot password
         </Link>
         <button type='submit'>Submit</button>
       </div>

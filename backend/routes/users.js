@@ -16,10 +16,4 @@ router.post(
 
 router.post('/login', usersController.login);
 
-router.post(
-  '/send_code',
-  [check('email').normalizeEmail().isEmail()],
-  usersController.sendPasswordResetCode
-);
-
 module.exports = router;

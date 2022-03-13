@@ -1,8 +1,9 @@
-import { Fragment, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../redux/user';
 import ReadOnlyNote from '../components/notes/ReadOnlyNote';
 import ReadWriteNote from '../components/notes/ReadWriteNote';
-import ErrorModal from '../components/UI/ErrorModal';
 import styles from './Guest.module.css';
 
 const backendURL = process.env.REACT_APP_BACKEND_URL;
@@ -10,9 +11,11 @@ const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 const Guest = () => {
   const params = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { setError } = userActions;
   const [readOnlyNote, setReadOnlyNote] = useState(null);
   const [readWriteNote, setReadWriteNote] = useState(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -30,13 +33,14 @@ const Guest = () => {
           }
         }
       } catch (error) {
-        setError(error.message);
+        dispatch(setError({ message: error.message }));
+        history.replace('/');
       }
     };
     if (!readOnlyNote && !readWriteNote) {
       fetchNote();
     }
-  }, [params, readOnlyNote, readWriteNote]);
+  }, [dispatch, params, setError, readOnlyNote, readWriteNote]);
 
   const submitEditNoteHandler = async (title, content) => {
     try {
@@ -57,34 +61,24 @@ const Guest = () => {
     }
   };
 
-  const clearErrorHandler = () => {
-    setError(null);
-  };
-
   return (
-    <Fragment>
-      <div className={styles.top}>
-        <h2>Shared with you</h2>
+    <div className={styles.container}>
+      <div className={styles.note}>
+        {readOnlyNote && (
+          <ReadOnlyNote
+            title={readOnlyNote.title}
+            content={readOnlyNote.content}
+          />
+        )}
+        {readWriteNote && (
+          <ReadWriteNote
+            title={readWriteNote.title}
+            content={readWriteNote.content}
+            onSubmit={submitEditNoteHandler}
+          />
+        )}
       </div>
-      <div className={styles.container}>
-        <div className={styles.note}>
-          <ErrorModal error={error} onClear={clearErrorHandler} />
-          {readOnlyNote && (
-            <ReadOnlyNote
-              title={readOnlyNote.title}
-              content={readOnlyNote.content}
-            />
-          )}
-          {readWriteNote && (
-            <ReadWriteNote
-              title={readWriteNote.title}
-              content={readWriteNote.content}
-              onSubmit={submitEditNoteHandler}
-            />
-          )}
-        </div>
-      </div>
-    </Fragment>
+    </div>
   );
 };
 

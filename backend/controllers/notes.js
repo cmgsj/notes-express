@@ -16,9 +16,6 @@ exports.getNotes = async (req, res, next) => {
   if (!user) {
     return next(new HttpError('User not found.', 404));
   }
-  // if (user.notes.length === 0) {
-  //   return next(new HttpError('Could not find notes for provided user.', 404));
-  // }
   res.json({
     message: 'Notes fetched succesfully.',
     notes: user.notes.map((note) => note.toObject({ getters: true })),

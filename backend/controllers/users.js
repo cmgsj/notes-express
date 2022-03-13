@@ -1,9 +1,9 @@
 const HttpError = require('../models/http-error');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 exports.signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -36,19 +36,15 @@ exports.signup = async (req, res, next) => {
     password: hashedPassword,
     notes: [],
   });
-  try {
-    await createdUser.save();
-  } catch (err) {
-    return next(new HttpError('Signing up failed, please try again.', 500));
-  }
   let token;
   try {
+    await createdUser.save();
     token = jwt.sign(
       { userId: createdUser.id, email: createdUser.email },
       process.env.JWT_KEY,
       { expiresIn: '1h' }
     );
-  } catch (error) {
+  } catch (err) {
     return next(new HttpError('Signing up failed, please try again.', 500));
   }
   res.status(201).json({
@@ -98,46 +94,5 @@ exports.login = async (req, res, next) => {
     userId: existingUser.id,
     email: existingUser.email,
     token: token,
-  });
-};
-
-exports.resetPassword = async (req, res, next) => {};
-
-exports.sendPasswordResetCode = async (req, res, next) => {
-  const { email } = req.body;
-  console.log(email);
-  let existingUser;
-  try {
-    existingUser = await User.findOne({ email: email });
-  } catch (err) {
-    return next(
-      new HttpError('Sending code failed, please try again later.', 500)
-    );
-  }
-  if (!existingUser) {
-    return next(new HttpError('Invalid email, verify your information.', 403));
-  }
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: '@gmail.com',
-      pass: '',
-    },
-  });
-
-  const mailOptions = {
-    from: '@gmail.com',
-    to: email,
-    subject: 'Notes-Express Password Reset Code',
-    text: 'Notes-Express Password Reset Code',
-  };
-
-  return transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
   });
 };
