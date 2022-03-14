@@ -75,11 +75,10 @@ exports.sendPasswordResetCode = async (req, res, next) => {
       from: process.env.MAIL_USERNAME,
       to: email,
       subject: 'Notes-Express Password Reset Code',
-      html: `<h3>
-              Follow this 
-              <a href="http://localhost:3000/reset_password/${jwtToken}">link</a>
-              to reset your Notes-Express password.
-            </h3>`,
+      html: `<h3>Hello ${existingUser.name},</h3>
+      <p>Follow this
+      <a href="http://localhost:3000/reset_password/${jwtToken}">link</a>
+      to reset your Notes-Express password.</p>`,
     };
     // transporter.sendMail(mailOptions, (error, data) => {
     //   if (error) {

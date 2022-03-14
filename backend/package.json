@@ -1,15 +1,11 @@
 {
-  "name": "nodejs-complete-guide",
+  "name": "notes-epress",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://git-codecommit.us-east-1.amazonaws.com/v1/repos/udemy-course-nodejs-complete"
   },
   "author": "",
   "license": "ISC",
