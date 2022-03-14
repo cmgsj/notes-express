@@ -51,7 +51,6 @@ const userSlice = createSlice({
       return initialState;
     },
     setError: (state, action) => {
-      //isLoading???
       state.isLoading = false;
       state.error = action.payload.message;
     },

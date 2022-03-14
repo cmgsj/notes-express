@@ -1,3 +1,4 @@
+import FormButton from '../../UI/FormButton';
 import styles from './DeleteNoteForm.module.css';
 
 const DeleteNoteForm = (props) => {
@@ -9,10 +10,10 @@ const DeleteNoteForm = (props) => {
   return (
     <form className={styles.form} onSubmit={submitFormHandler}>
       <h3>Are you sure you want to delete?</h3>
-      <button type='submit'>Yes</button>
-      <button type='button' onClick={props.onCancel}>
+      <FormButton type='submit'>Yes</FormButton>
+      <FormButton cancel onClick={props.onCancel}>
         No
-      </button>
+      </FormButton>
     </form>
   );
 };

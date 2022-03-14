@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { createNote } from '../../redux/userAsyncThunks';
+import { createNote } from '../../../redux/userAsyncThunks';
+import FormButton from '../../UI/FormButton';
 import styles from './NewNoteForm.module.css';
 
 const NewNoteForm = (props) => {
@@ -21,16 +22,10 @@ const NewNoteForm = (props) => {
       <input type='text' placeholder='Title' ref={titleRef} />
       <textarea placeholder='Text' ref={contentRef} />
       <div className={styles.buttons}>
-        <button
-          className={styles.cancelButton}
-          type='button '
-          onClick={props.onCancel}
-        >
+        <FormButton cancel onClick={props.onCancel}>
           Cancel
-        </button>
-        <button className={styles.doneButton} type='submit'>
-          Done
-        </button>
+        </FormButton>
+        <FormButton type='submit'>Done</FormButton>
       </div>
     </form>
   );

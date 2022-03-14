@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import FormButton from '../../UI/FormButton';
 import styles from './EditNoteForm.module.css';
 
 const EditNoteForm = (props) => {
@@ -24,10 +25,10 @@ const EditNoteForm = (props) => {
         ref={editedContentRef}
       ></textarea>
       <div className={styles.buttons}>
-        <button type='button' onClick={props.onCancel}>
+        <FormButton cancel onClick={props.onCancel}>
           Cancel
-        </button>
-        <button type='submit'>Done</button>
+        </FormButton>
+        <FormButton type='submit'>Done</FormButton>
       </div>
     </form>
   );

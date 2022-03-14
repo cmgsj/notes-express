@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import NotesList from '../components/notes/NotesList';
 import ActionBar from '../components/layout/ActionsBar';
-import NewNoteButton from '../components/notes/NewNoteButton';
-import NewNoteForm from '../components/notes/NewNoteForm';
+import NewNoteButton from '../components/UI/NewNoteButton';
+import NewNoteForm from '../components/notes/forms/NewNoteForm';
 import styles from './Home.module.css';
 
 const Home = () => {
-  const [showForm, setShowForm] = useState(false);
+  const [showNewNoteForm, setShowNewNoteForm] = useState(false);
 
   const toggleFormHandler = () => {
-    setShowForm((prevState) => !prevState);
+    setShowNewNoteForm((prevState) => !prevState);
   };
 
   const noteCreatedHandler = () => {
-    setShowForm(false);
+    setShowNewNoteForm(false);
   };
 
   return (
     <div className={styles.home}>
       <ActionBar />
-      <NewNoteButton showActive={showForm} onClick={toggleFormHandler} />
-      {showForm && (
+      <NewNoteButton active={showNewNoteForm} onClick={toggleFormHandler} />
+      {showNewNoteForm && (
         <NewNoteForm
           onSubmit={noteCreatedHandler}
           onCancel={toggleFormHandler}

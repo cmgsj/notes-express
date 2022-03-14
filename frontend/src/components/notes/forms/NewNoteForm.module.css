@@ -4,14 +4,16 @@
   border-radius: 15px;
   border: 2px solid black;
   margin: 1rem;
-  padding: 1.5rem;
+  padding: 0.5rem;
+  padding-top: 1rem;
   width: 70%;
   background-color: rgb(241, 240, 240);
 }
 
 .newNote input {
   margin: 0.5rem auto;
-  width: 100%;
+  height: 1.5rem;
+  width: 90%;
   border: 1px solid black;
   background-color: rgb(241, 240, 240);
   border-radius: 5px;
@@ -19,9 +21,9 @@
 
 .newNote textarea {
   margin: 0.5rem auto;
-  width: 100%;
+  width: 90%;
   resize: vertical;
-  height: 4rem;
+  height: 8rem;
   max-height: 20rem;
   border: 1px solid black;
   background-color: rgb(241, 240, 240);
@@ -31,30 +33,4 @@
 .buttons {
   margin-left: auto;
   margin-right: 0;
-}
-
-.newNote button {
-  border-radius: 15px;
-  border: 1px solid black;
-  font-weight: bold;
-  color: white;
-  padding: 0.4rem;
-  margin: 0.5rem;
-  min-width: 3rem;
-}
-
-.doneButton {
-  background-color: dodgerblue;
-}
-
-.doneButton:hover {
-  background-color: rgb(0, 85, 170);
-}
-
-.cancelButton {
-  background-color: red;
-}
-
-.cancelButton:hover {
-  background-color: rgb(146, 0, 0);
 }

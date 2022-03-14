@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { userActions } from '../../redux/user';
+import { userActions } from '../../../redux/user';
+import FormButton from '../../UI/FormButton';
 import styles from './ShareNoteForm.module.css';
 
 const ShareNoteForm = (props) => {
@@ -8,7 +9,7 @@ const ShareNoteForm = (props) => {
   const [hasExpirationTime, setHasExpirationTime] = useState(false);
   const [expirationTime, setExpirationTime] = useState('24');
   const [selectedPermission, setSelectedPermission] = useState('READ_ONLY');
-  
+
   const dispatch = useDispatch();
   const { clearSharingToken } = userActions;
   const sharingToken = useSelector((state) => state.user.sharingToken);
@@ -79,16 +80,14 @@ const ShareNoteForm = (props) => {
             readOnly
             ref={urlRef}
           />
-          <button type='button' onClick={copyUrlToClipboardHandler}>
-            copy url
-          </button>
+          <FormButton onClick={copyUrlToClipboardHandler}>copy url</FormButton>
         </div>
       )}
       <div>
-        <button type='button' onClick={props.onCancel}>
+        <FormButton cancel onClick={props.onCancel}>
           cancel
-        </button>
-        <button type='submit'>share</button>
+        </FormButton>
+        <FormButton type='submit'>share</FormButton>
       </div>
     </form>
   );

@@ -1,9 +1,9 @@
 import { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editNote, shareNote, deleteNote } from '../../redux/userAsyncThunks';
-import EditNoteForm from './EditNoteForm';
-import ShareNoteForm from './ShareNoteForm';
-import DeleteNoteForm from './DeleteNoteForm';
+import EditNoteForm from './forms/EditNoteForm';
+import ShareNoteForm from './forms/ShareNoteForm';
+import DeleteNoteForm from './forms/DeleteNoteForm';
 import styles from './Note.module.css';
 
 const Note = (props) => {
@@ -11,7 +11,7 @@ const Note = (props) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
-  const [showDates, setShowDates] = useState(true);
+  const [showDates, setShowDates] = useState(false);
 
   const toggleIsEditingHandler = () => {
     setIsEditing((prevState) => !prevState);
@@ -51,7 +51,7 @@ const Note = (props) => {
           <h1>{props.title}</h1>
           <p>{props.content}</p>
           <section>
-            <section>
+            <div className={styles.dates}>
               <span>
                 {showDates &&
                   'Updated: ' + new Date(props.updatedAt).toLocaleString()}
@@ -60,14 +60,14 @@ const Note = (props) => {
                 {showDates &&
                   'Created: ' + new Date(props.createdAt).toLocaleString()}
               </span>
-            </section>
+            </div>
             {!(isDeleting || isSharing) && (
-              <section className={styles.buttons}>
+              <div className={styles.buttons}>
                 <button onClick={toggleShowDatesHandler}>●●●</button>
                 <button onClick={toggleIsEditingHandler}>✏️</button>
                 <button onClick={toggleIsSharingHandler}>↗️</button>
                 <button onClick={toggleIsDeletingHandler}>🗑</button>
-              </section>
+              </div>
             )}
           </section>
           {isDeleting && (

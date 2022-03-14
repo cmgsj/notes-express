@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react';
-import EditNoteForm from './EditNoteForm';
+import EditNoteForm from './forms/EditNoteForm';
 import styles from './Note.module.css';
 
 const ReadWriteNote = (props) => {

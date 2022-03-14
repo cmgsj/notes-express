@@ -6,10 +6,10 @@ const ActionBar = (props) => {
       className={styles.new}
       onClick={props.onClick}
       style={{
-        backgroundColor: props.showActive ? 'red' : 'dodgerblue',
+        backgroundColor: props.active ? 'red' : 'dodgerblue',
       }}
     >
-      {props.showActive ? '−' : '+'}
+      {props.active ? '−' : '+'}
     </button>
   );
 };
