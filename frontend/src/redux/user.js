@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchLogin,
   fetchSignup,
+  resetPassword,
+  sendPasswordResetLink,
   loadNotes,
   createNote,
   editNote,
@@ -97,6 +99,23 @@ const userSlice = createSlice({
       if (token) {
         userSlice.caseReducers.login(state, { payload: { token } });
       }
+    },
+    //resetPassword
+    [resetPassword.pending]: loadingStateHandler,
+    [resetPassword.rejected]: errorStateHandler,
+    [resetPassword.fulfilled]: (state, action) => {
+      const { userId, token } = action.payload;
+      state.userId = userId;
+      state.isLoading = false;
+      if (token) {
+        userSlice.caseReducers.login(state, { payload: { token } });
+      }
+    },
+    //sendPasswordResetLink
+    [sendPasswordResetLink.pending]: loadingStateHandler,
+    [sendPasswordResetLink.rejected]: errorStateHandler,
+    [sendPasswordResetLink.fulfilled]: (state, action) => {
+      state.isLoading = false;
     },
     // loadNotes
     [loadNotes.pending]: loadingStateHandler,

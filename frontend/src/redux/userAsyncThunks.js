@@ -44,6 +44,48 @@ export const fetchSignup = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  'user/resetPassword',
+  async ({ token, password }, thunkAPI) => {
+    try {
+      const response = await fetch(`${backendURL}/reset_password/${token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        return responseData;
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const sendPasswordResetLink = createAsyncThunk(
+  'user/sendPasswordResetLink',
+  async (email, thunkAPI) => {
+    try {
+      const response = await fetch(`${backendURL}/reset_password/send_code`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        return responseData;
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const loadNotes = createAsyncThunk(
   'user/getNotes',
   async (args, thunkAPI) => {

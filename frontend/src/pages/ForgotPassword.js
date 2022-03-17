@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { userActions } from '../redux/user';
+import { sendPasswordResetLink } from '../redux/userAsyncThunks';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Card from '../components/UI/Card';
@@ -8,44 +9,25 @@ import styles from './Auth.module.css';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const { setError } = userActions;
+  const [showSentMessage, setShowSentMessage] = useState(false);
 
   const initialValues = { email: '' };
-
   const validationSchema = yup.object({
     email: yup.string().email('Invalid email address').required('Required'),
   });
 
   const submitHandler = (values, { setSubmitting, resetForm }) => {
     const { email } = values;
-    fetchSendCode(email);
+    dispatch(sendPasswordResetLink(email));
     setSubmitting(false);
     resetForm();
-  };
-
-  const fetchSendCode = async (email) => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/reset_password/send_code`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        }
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      dispatch(setError({ message: error.message }));
-    }
+    setShowSentMessage(true);
   };
 
   return (
     <div className={styles.container}>
       <Card className={styles.form}>
-        <h2>Send Code</h2>
+        <h2>Reset Password</h2>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -66,6 +48,11 @@ const ForgotPassword = () => {
             </section>
           </Form>
         </Formik>
+        {showSentMessage && (
+          <p className={styles.afterMessage}>
+            A link has been sent to your email.
+          </p>
+        )}
       </Card>
     </div>
   );

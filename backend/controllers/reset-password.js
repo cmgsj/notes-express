@@ -149,5 +149,19 @@ exports.resetPassword = async (req, res, next) => {
       new HttpError('Reseting password failed, please try again later.', 500)
     );
   }
-  res.status(200).json({ message: 'Passord reset succesfully.' });
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: existingUser.id, email: existingUser.email },
+      process.env.JWT_KEY,
+      { expiresIn: '1h' }
+    );
+  } catch (error) {
+    return next(new HttpError('Logging in failed, please try again.', 500));
+  }
+  res.status(200).json({
+    message: 'Passord reset succesfully.',
+    userId: existingUser.id,
+    token: token,
+  });
 };
