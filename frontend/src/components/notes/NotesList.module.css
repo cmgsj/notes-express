@@ -1,12 +1,18 @@
 .notes {
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7rem;
+  margin-bottom: 5rem;
+  width: 100%;
 }
 
 .none {
   display: flex;
   justify-content: center;
+  text-align: center;
   font-weight: bold;
   font-size: x-large;
-  color: gray;
-  margin: 7rem;
+  color: rgb(49, 49, 50, 0.75);
+  margin-top: 7rem;
 }

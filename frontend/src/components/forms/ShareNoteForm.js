@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { userActions } from '../../../redux/user';
-import FormButton from '../../UI/FormButton';
+import { userActions } from '../../redux/user';
+import FormButton from '../UI/FormButton';
 import styles from './ShareNoteForm.module.css';
 
 const ShareNoteForm = (props) => {

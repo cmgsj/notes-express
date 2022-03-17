@@ -1,10 +1,10 @@
-import './LoadingSpinner.css';
+import styles from './LoadingSpinner.module.css';
 
 const LoadingSpinner = (props) => {
   return (
     props.show && (
-      <div className={`${props.asOverlay && 'loading-spinner__overlay'}`}>
-        <div className='lds-dual-ring'></div>
+      <div className={`${props.asOverlay && styles.loading_spinner_overlay}`}>
+        <div className={styles.lds_dual_ring}></div>
       </div>
     )
   );

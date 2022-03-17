@@ -1,9 +1,10 @@
 import { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editNote, shareNote, deleteNote } from '../../redux/userAsyncThunks';
-import EditNoteForm from './forms/EditNoteForm';
-import ShareNoteForm from './forms/ShareNoteForm';
-import DeleteNoteForm from './forms/DeleteNoteForm';
+import EditNoteForm from '../forms/EditNoteForm';
+import ShareNoteForm from '../forms/ShareNoteForm';
+import DeleteNoteForm from '../forms/DeleteNoteForm';
+import Card from '../UI/Card';
 import styles from './Note.module.css';
 
 const Note = (props) => {
@@ -45,31 +46,29 @@ const Note = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       {!isEditing && (
-        <div className={styles.note}>
+        <Card className={styles.note}>
           <h1>{props.title}</h1>
           <p>{props.content}</p>
-          <section>
+          {!(isDeleting || isSharing) && (
+            <div className={styles.buttons}>
+              <button onClick={toggleShowDatesHandler}>●●●</button>
+              <button onClick={toggleIsEditingHandler}>✏️</button>
+              <button onClick={toggleIsSharingHandler}>↗️</button>
+              <button onClick={toggleIsDeletingHandler}>❌</button>
+            </div>
+          )}
+          {showDates && (
             <div className={styles.dates}>
               <span>
-                {showDates &&
-                  'Updated: ' + new Date(props.updatedAt).toLocaleString()}
+                {'Updated: ' + new Date(props.updatedAt).toLocaleString()}
               </span>
               <span>
-                {showDates &&
-                  'Created: ' + new Date(props.createdAt).toLocaleString()}
+                {'Created: ' + new Date(props.createdAt).toLocaleString()}
               </span>
             </div>
-            {!(isDeleting || isSharing) && (
-              <div className={styles.buttons}>
-                <button onClick={toggleShowDatesHandler}>●●●</button>
-                <button onClick={toggleIsEditingHandler}>✏️</button>
-                <button onClick={toggleIsSharingHandler}>↗️</button>
-                <button onClick={toggleIsDeletingHandler}>🗑</button>
-              </div>
-            )}
-          </section>
+          )}
           {isDeleting && (
             <DeleteNoteForm
               onCancel={toggleIsDeletingHandler}
@@ -82,7 +81,7 @@ const Note = (props) => {
               onSubmit={submitShareNoteHandler}
             />
           )}
-        </div>
+        </Card>
       )}
       {isEditing && (
         <EditNoteForm
@@ -92,7 +91,7 @@ const Note = (props) => {
           defaultContent={props.content}
         />
       )}
-    </Fragment>
+    </>
   );
 };
 

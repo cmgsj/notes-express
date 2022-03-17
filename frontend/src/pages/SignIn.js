@@ -1,51 +1,38 @@
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { userActions } from '../redux/user';
+import { fetchLogin } from '../redux/userAsyncThunks';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import Card from '../components/UI/Card';
 import FormButton from '../components/UI/FormButton';
 import styles from './Auth.module.css';
 
-const ForgotPassword = () => {
+const SignIn = () => {
   const dispatch = useDispatch();
-  const { setError } = userActions;
+  const history = useHistory();
 
-  const initialValues = { email: '' };
+  const initialValues = {
+    email: '',
+    password: '',
+  };
 
   const validationSchema = yup.object({
     email: yup.string().email('Invalid email address').required('Required'),
+    password: yup.string().required('Required'),
   });
 
   const submitHandler = (values, { setSubmitting, resetForm }) => {
-    const { email } = values;
-    fetchSendCode(email);
+    const { email, password } = values;
+    dispatch(fetchLogin({ email, password }));
     setSubmitting(false);
     resetForm();
-  };
-
-  const fetchSendCode = async (email) => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/reset_password/send_code`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email }),
-        }
-      );
-      const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      }
-    } catch (error) {
-      dispatch(setError({ message: error.message }));
-    }
+    history.push('/home');
   };
 
   return (
     <div className={styles.container}>
       <Card className={styles.form}>
-        <h2>Send Code</h2>
+        <h2>Login</h2>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -55,14 +42,22 @@ const ForgotPassword = () => {
             <div className={styles.field}>
               <label htmlFor='email'>Email</label>
               <Field name='email' type='email' />
+              <span className={styles.text}>
+                <ErrorMessage className={styles.errorText} name='email' />
+              </span>
+            </div>
+            <div className={styles.field}>
+              <label htmlFor='password'>Password</label>
+              <Field name='password' type='password' />
               <span>
-                <ErrorMessage name='email' />
+                <ErrorMessage name='password' />
               </span>
             </div>
             <section className={styles.foot}>
               <FormButton className={styles.button} type='submit'>
-                Submit
+                Sign In
               </FormButton>
+              <Link to='/forgot_password'>forgot password?</Link>
             </section>
           </Form>
         </Formik>
@@ -71,4 +66,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default SignIn;

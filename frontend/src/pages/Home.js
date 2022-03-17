@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import NotesList from '../components/notes/NotesList';
-import ActionBar from '../components/layout/ActionsBar';
+import ActionBar from '../components/navigation/ActionsBar';
 import NewNoteButton from '../components/UI/NewNoteButton';
-import NewNoteForm from '../components/notes/forms/NewNoteForm';
+import NewNoteForm from '../components/forms/NewNoteForm';
 import styles from './Home.module.css';
 
 const Home = () => {

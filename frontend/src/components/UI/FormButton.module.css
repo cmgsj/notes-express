@@ -1,25 +1,14 @@
 .formButton {
   margin: 0.5rem;
-  border: 1px solid black;
+  border: none;
   border-radius: 10px;
-  color: white;
   font-weight: bold;
   font-size: 1rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  color: white;
+  background-color: #0171e3;
 }
 
-.submitButton {
-  background-color: dodgerblue;
-}
-
-.submitButton:hover {
-  background-color: rgb(0, 85, 170);
-}
-
-.cancelButton {
-  background-color: red;
-}
-
-.cancelButton:hover {
-  background-color: rgb(146, 0, 0);
+.formButton:hover {
+  background-color: rgb(0, 128, 255);
 }

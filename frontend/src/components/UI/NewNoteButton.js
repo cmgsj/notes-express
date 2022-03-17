@@ -1,15 +1,19 @@
 import styles from './NewNoteButton.module.css';
 
 const ActionBar = (props) => {
+  const clickHandler = () => {
+    props.onClick();
+  };
+
   return (
     <button
-      className={styles.new}
-      onClick={props.onClick}
-      style={{
-        backgroundColor: props.active ? 'red' : 'dodgerblue',
-      }}
+      id='plus'
+      className={`${styles.new} ${
+        props.active ? styles.inactive : styles.active
+      }`}
+      onClick={clickHandler}
     >
-      {props.active ? '−' : '+'}
+      {props.active ? '×' : '+'} 
     </button>
   );
 };

@@ -1,0 +1,28 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid black;
+  align-items: center;
+  padding: 1rem;
+}
+
+.form label {
+  margin: 1rem;
+  font-weight: bold;
+  font-size: large;
+}
+
+.exp_time {
+  margin-left: 1rem;
+  width: 2rem;
+}
+
+.url {
+  margin-left: 1rem;
+  width: 20rem;
+}
+
+.exp {
+  display: inline-flex;
+  align-items: center;
+}

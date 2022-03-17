@@ -12,7 +12,7 @@ exports.signup = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -31,7 +31,8 @@ exports.signup = async (req, res, next) => {
     return next(new HttpError('Could not create user, plase try again.', 500));
   }
   const createdUser = new User({
-    name,
+    firstName,
+    lastName,
     email,
     password: hashedPassword,
     notes: [],

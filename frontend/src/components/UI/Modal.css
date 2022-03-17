@@ -4,14 +4,12 @@
   top: 22vh;
   left: 10%;
   width: 80%;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 8px;
+  background: rgb(250, 250, 250);
 }
 
 .modal__header {
-  padding: 1rem 0.5rem;
-  background: teal;
+  padding: 0.5rem;
+  background-color: #313132;
   color: white;
 }
 

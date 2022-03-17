@@ -5,7 +5,7 @@ const FormButton = (props) => {
     <button
       className={`${styles.formButton} ${
         props.cancel ? styles.cancelButton : styles.submitButton
-      }`}
+      } ${props.className}`}
       type={props.type || 'button'}
       onClick={props.onClick}
     >

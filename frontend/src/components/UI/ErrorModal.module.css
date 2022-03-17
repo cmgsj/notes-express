@@ -1,15 +1,8 @@
 .ok_button {
-  min-width: 1rem;
-  border-radius: 10px;
-  border: 1px solid black;
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  background-color: dodgerblue;
-  color: white;
+  float: right;
 }
 
-.ok_button:hover {
-  background-color: rgb(0, 85, 170);
+.errorMessage {
+  margin: 0.5rem;
+  font-size: large;
 }

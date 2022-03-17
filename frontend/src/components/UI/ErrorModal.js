@@ -1,5 +1,6 @@
 import Modal from './Modal';
 import styles from './ErrorModal.module.css';
+import FormButton from './FormButton';
 
 const ErrorModal = (props) => {
   return (
@@ -8,12 +9,12 @@ const ErrorModal = (props) => {
       header='An Error Occurred!'
       show={!!props.error}
       footer={
-        <button className={styles.ok_button} onClick={props.onClear}>
-          Okay
-        </button>
+        <FormButton cancel className={styles.ok_button} onClick={props.onClear}>
+          Close
+        </FormButton>
       }
     >
-      <p>{props.error}</p>
+      <p className={styles.errorMessage}>{props.error}</p>
     </Modal>
   );
 };

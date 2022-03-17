@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,14 +7,17 @@ import {
 } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { userActions } from './redux/user';
-import Home from './pages/Home';
-import Auth from './pages/Auth';
-import Guest from './pages/Guest';
-import Layout from './components/layout/Layout';
 import LoadingSpinner from './components/UI/LoadingSpinner';
 import ErrorModal from './components/UI/ErrorModal';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
+const Home = lazy(() => import('./pages/Home'));
+const SignIn = lazy(() => import('./pages/SignIn'));
+const SignUp = lazy(() => import('./pages/SignUp'));
+const Guest = lazy(() => import('./pages/Guest'));
+const MainNavigation = lazy(() =>
+  import('./components/navigation/MainNavigation')
+);
+const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 
 let logoutTimer;
 
@@ -69,32 +72,36 @@ const App = () => {
   } else {
     routes = (
       <Switch>
-        <Route exact path='/auth'>
-          <Auth />
+        <Route exact path='/sign_in'>
+          <SignIn />
+        </Route>
+        <Route exact path='/sign_up'>
+          <SignUp />
         </Route>
         <Route exact path='/guest/:token'>
           <Guest />
         </Route>
-        <Route exact path='/reset_password'>
+        <Route exact path='/forgot_password'>
           <ForgotPassword />
         </Route>
         <Route exact path='/reset_password/:token'>
           <ResetPassword />
         </Route>
         <Route path='*'>
-          <Redirect to='/auth' />
+          <Redirect to='/sign_in' />
         </Route>
       </Switch>
     );
   }
   return (
-    <Fragment>
+    <Router>
       <LoadingSpinner show={isLoading} asOverlay />
       <ErrorModal error={error} onClear={clearErrorHandler} />
-      <Layout>
-        <Router>{routes}</Router>
-      </Layout>
-    </Fragment>
+      <Suspense fallback={<LoadingSpinner show={true} asOverlay />}>
+        <MainNavigation />
+        {routes}
+      </Suspense>
+    </Router>
   );
 };
 

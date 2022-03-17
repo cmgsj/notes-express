@@ -1,15 +1,15 @@
 const getCompareFunction = (order) => {
   switch (order) {
-    case 'last-edited-first':
+    case 'newest-edited':
       return (a, b) =>
         -(new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
-    case 'first-edited-first':
+    case 'oldest-edited':
       return (a, b) =>
         new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
-    case 'last-created-first':
+    case 'newest-created':
       return (a, b) =>
         -(new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-    case 'first-created-first':
+    case 'oldest-created':
       return (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     default:

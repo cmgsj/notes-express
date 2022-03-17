@@ -10,7 +10,6 @@ const ActionsBar = () => {
 
   const sortSelectionHandler = (event) => {
     const selection = event.target.value;
-    console.log('selection: ' + selection);
     dispatch(sortNotes({ selection }));
   };
 
@@ -22,19 +21,21 @@ const ActionsBar = () => {
 
   return (
     <div className={styles.bar}>
-      <label>Sort By:</label>
-      <select onChange={sortSelectionHandler}>
-        <option value='last-edited-first'>last edited first</option>
-        <option value='first-edited-first'>first edited first</option>
-        <option value='last-created-first'>last created first</option>
-        <option value='first-created-first'>first created first</option>
-      </select>
-      <input
-        type='text'
-        placeholder='search'
-        value={searchFor}
-        onChange={searchForChangeHandler}
-      />
+      <div className={styles.actions}>
+        <select onChange={sortSelectionHandler}>
+          <option disabled>Sort</option>
+          <option value='newest-edited'>newest edited</option>
+          <option value='oldest-edited'>oldest edited </option>
+          <option value='newest-created'>newest created</option>
+          <option value='oldest-created'>oldest created</option>
+        </select>
+        <input
+          type='text'
+          placeholder='search'
+          value={searchFor}
+          onChange={searchForChangeHandler}
+        />
+      </div>
     </div>
   );
 };

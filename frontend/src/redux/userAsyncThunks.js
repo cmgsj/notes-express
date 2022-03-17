@@ -25,12 +25,12 @@ export const fetchLogin = createAsyncThunk(
 
 export const fetchSignup = createAsyncThunk(
   'user/signup',
-  async ({ name, email, password }, thunkAPI) => {
+  async ({ firstName, lastName, email, password }, thunkAPI) => {
     try {
       const response = await fetch(`${backendURL}/user/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password }),
       });
       const responseData = await response.json();
       if (!response.ok) {
