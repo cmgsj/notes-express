@@ -1,5 +1,4 @@
 const express = require('express');
-const { check } = require('express-validator');
 const notesController = require('../controllers/notes');
 const checkAuth = require('../middleware/auth');
 
@@ -9,17 +8,9 @@ router.use(checkAuth);
 
 router.get('/', notesController.getNotes);
 
-router.post(
-  '/',
-  [check('title').notEmpty(), check('content').notEmpty()],
-  notesController.createNote
-);
+router.post('/', notesController.createNote);
 
-router.put(
-  '/:noteId',
-  [check('title').notEmpty(), check('content').notEmpty()],
-  notesController.updateNote
-);
+router.put('/:noteId', notesController.updateNote);
 
 router.delete('/:noteId', notesController.deleteNote);
 

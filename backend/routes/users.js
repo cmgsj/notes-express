@@ -7,10 +7,15 @@ const router = express.Router();
 router.post(
   '/signup',
   [
-    check('firstName').notEmpty(),
-    check('lastName').notEmpty(),
+    check('firstName')
+      .isAlpha('en-US', { ignore: ' ' })
+      .isLength({ min: 2, max: 20 }),
+    check('lastName')
+      .isAlpha('en-US', { ignore: ' ' })
+      .isLength({ min: 2, max: 20 }),
     check('email').normalizeEmail().isEmail(),
-    check('password').isLength({ min: 8 }),
+    check('password').isStrongPassword(),
+    check('confirmedPassword').isStrongPassword(),
   ],
   usersController.signup
 );

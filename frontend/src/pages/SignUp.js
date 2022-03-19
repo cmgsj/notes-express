@@ -16,36 +16,40 @@ const SignUp = () => {
     lastName: '',
     email: '',
     password: '',
-    confirmed_password: '',
+    confirmedPassword: '',
   };
 
   const validationSchema = yup.object({
     firstName: yup
       .string()
       .required('Required')
-      .max(15, 'Must be 15 characters or less'),
+      .min(2, 'Must have at least 2 characters')
+      .max(20, 'Must have at most 20 characters'),
     lastName: yup
       .string()
       .required('Required')
-      .max(20, 'Must be 20 characters or less'),
-    email: yup.string().email('Invalid email address').required('Required'),
+      .min(2, 'Must have at least 2 characters')
+      .max(20, 'Must have at most 20 characters'),
+    email: yup.string().required('Required').email('Invalid email address'),
     password: yup
       .string()
       .required('Required')
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-        'Must Contain 8 Characters: One Uppercase, One Lowercase, One Number and One Special Character'
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+        'Must have at least 8 characters, one uppercase, one number and one special case character'
       ),
-    confirmed_password: yup
+    confirmedPassword: yup
       .string()
       .required('Required')
       .oneOf([yup.ref('password'), null], 'Passwords must match'),
   });
 
   const submitHandler = (values, { setSubmitting, resetForm }) => {
-    const { firstName, lastName, email, password, confirmed_password } = values;
-    if (password === confirmed_password) {
-      dispatch(fetchSignup({ firstName, lastName, email, password }));
+    const { firstName, lastName, email, password, confirmedPassword } = values;
+    if (password === confirmedPassword) {
+      dispatch(
+        fetchSignup({ firstName, lastName, email, password, confirmedPassword })
+      );
     }
     setSubmitting(false);
     resetForm();
@@ -91,10 +95,10 @@ const SignUp = () => {
               </span>
             </div>
             <div className={styles.field}>
-              <label htmlFor='confirmed_password'>Confirm Password</label>
-              <Field name='confirmed_password' type='password' />
+              <label htmlFor='confirmedPassword'>Confirm Password</label>
+              <Field name='confirmedPassword' type='password' />
               <span>
-                <ErrorMessage name='confirmed_password' />
+                <ErrorMessage name='confirmedPassword' />
               </span>
             </div>
             <section className={styles.foot}>

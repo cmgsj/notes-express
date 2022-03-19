@@ -12,7 +12,10 @@ exports.signup = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, confirmedPassword } = req.body;
+  if (password !== confirmedPassword) {
+    return next(new HttpError('Passwords must match, plase try again', 422));
+  }
   let existingUser;
   try {
     existingUser = await User.findOne({ email: email });
@@ -37,16 +40,20 @@ exports.signup = async (req, res, next) => {
     password: hashedPassword,
     notes: [],
   });
-  let token;
   try {
     await createdUser.save();
+  } catch (err) {
+    return next(new HttpError('Signing up failed, please try again.', 500));
+  }
+  let token;
+  try {
     token = jwt.sign(
       { userId: createdUser.id, email: createdUser.email },
       process.env.JWT_KEY,
       { expiresIn: '1h' }
     );
-  } catch (err) {
-    return next(new HttpError('Signing up failed, please try again.', 500));
+  } catch (error) {
+    return next(new HttpError('Logging up failed, please try again.', 500));
   }
   res.status(201).json({
     userId: createdUser.id,

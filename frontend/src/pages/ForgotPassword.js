@@ -51,6 +51,8 @@ const ForgotPassword = () => {
         {showSentMessage && (
           <p className={styles.afterMessage}>
             A link has been sent to your email.
+            <br />
+            It is valid for one hour.
           </p>
         )}
       </Card>

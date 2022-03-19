@@ -1,6 +1,5 @@
 const Note = require('../models/note');
 const HttpError = require('../models/http-error');
-const { validationResult } = require('express-validator');
 
 exports.getNote = async (req, res, next) => {
   const { userId, noteId, permission } = req.sharingData;
@@ -27,16 +26,13 @@ exports.getNote = async (req, res, next) => {
 };
 
 exports.updateNote = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
-    );
-  }
   const { userId, noteId, permission } = req.sharingData;
   const { title, content } = req.body;
   if (permission !== 'READ_WRITE') {
     return next(new HttpError('Updating note not allowed.', 401));
+  }
+  if (title === '') {
+    title = 'Empty Note';
   }
   let note;
   try {

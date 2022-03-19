@@ -14,9 +14,7 @@ const NewNoteForm = (props) => {
     event.preventDefault();
     const title = titleRef.current.value;
     const content = contentRef.current.value;
-    if (title !== '' && content !== '') {
-      dispatch(createNote({ title, content }));
-    }
+    dispatch(createNote({ title, content }));
     props.onSubmit();
   };
 
@@ -24,7 +22,7 @@ const NewNoteForm = (props) => {
     <Card className={styles.card}>
       <form className={styles.newNote} onSubmit={formSubmissionHandler}>
         <input type='text' placeholder='Title' ref={titleRef} />
-        <textarea placeholder='Text' ref={contentRef} />
+        <textarea placeholder='Content' ref={contentRef} />
         <div className={styles.buttons}>
           <FormButton cancel onClick={props.onCancel}>
             Cancel

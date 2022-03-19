@@ -27,6 +27,7 @@ const MainNavigation = () => {
 
   const goToHomeHandler = () => {
     history.push('/');
+    console.log(window.screen.width);
   };
 
   const goToSignInHandler = () => {
@@ -37,19 +38,16 @@ const MainNavigation = () => {
     history.push('/sign_up');
   };
 
+  const goBackHandler = () => {
+    history.goBack();
+  };
+
+  const goForthHandler = () => {
+    history.goForward();
+  };
+
   return (
     <header className={styles.header}>
-      <SideDrawer show={showDrawer} onClick={closeDrawerHandler}>
-        <div className={styles.drawer}>
-          <button>Home</button>
-          <button>Profile</button>
-          <button>Shared with me</button>
-          <button>Share</button>
-          <button>Settings</button>
-          <button>About</button>
-          <button onClick={logoutHandler}>Logout</button>
-        </div>
-      </SideDrawer>
       <div className={styles.menu}>
         <h2 className={styles.text} onClick={goToHomeHandler}>
           Notes Express
@@ -58,6 +56,26 @@ const MainNavigation = () => {
           <div>
             <button
               className={`${styles.menu_button} ${styles.icon}`}
+              onClick={goToHomeHandler}
+            >
+              {'⌂'}
+            </button>
+            <button
+              className={`${styles.menu_button} ${styles.icon}`}
+              onClick={goBackHandler}
+            >
+              {'<'}
+            </button>
+            <button
+              className={`${styles.menu_button} ${styles.icon}`}
+              onClick={goForthHandler}
+            >
+              {'>'}
+            </button>
+            <button
+              className={`${styles.menu_button} ${styles.icon} ${
+                showDrawer && styles.active
+              }`}
               onClick={toggleDrawerHandler}
             >
               {showDrawer ? '×' : '≡'}
@@ -85,6 +103,17 @@ const MainNavigation = () => {
           </div>
         )}
       </div>
+      <SideDrawer show={showDrawer} onClick={closeDrawerHandler}>
+        <div className={styles.drawer}>
+          <button>Home</button>
+          <button>Profile</button>
+          <button>Shared with me</button>
+          <button>Share</button>
+          <button>Settings</button>
+          <button>About</button>
+          <button onClick={logoutHandler}>Logout</button>
+        </div>
+      </SideDrawer>
     </header>
   );
 };

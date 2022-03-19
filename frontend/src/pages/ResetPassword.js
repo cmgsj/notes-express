@@ -12,23 +12,28 @@ const ResetPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const initialValues = { password: '', confirmed_password: '' };
+  const initialValues = { password: '', confirmedPassword: '' };
 
   const validationSchema = yup.object({
     password: yup
       .string()
-      .min(8, 'Password must be at least 8 characters')
-      .required('Required'),
-    confirmed_password: yup
+      .required('Required')
+      .matches(
+        /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
+        'Must have at least 8 characters, one uppercase, one number and one special case character'
+      ),
+    confirmedPassword: yup
       .string()
-      .oneOf([yup.ref('password') /*, null*/], 'Passwords must match')
-      .required('Required'),
+      .required('Required')
+      .oneOf([yup.ref('password'), null], 'Passwords must match'),
   });
 
   const submitHandler = (values, actions) => {
-    const { password, confirmed_password } = values;
-    if (password === confirmed_password) {
-      dispatch(resetPassword({ token: params.token, password }));
+    const { password, confirmedPassword } = values;
+    if (password === confirmedPassword) {
+      dispatch(
+        resetPassword({ token: params.token, password, confirmedPassword })
+      );
       history.push('/home');
     }
   };
@@ -51,10 +56,10 @@ const ResetPassword = () => {
               </span>
             </div>
             <div className={styles.field}>
-              <label htmlFor='confirmed_password'>Confirm New Password</label>
-              <Field name='confirmed_password' type='password' />
+              <label htmlFor='confirmedPassword'>Confirm New Password</label>
+              <Field name='confirmedPassword' type='password' />
               <span>
-                <ErrorMessage name='confirmed_password' />
+                <ErrorMessage name='confirmedPassword' />
               </span>
             </div>
             <section className={styles.foot}>

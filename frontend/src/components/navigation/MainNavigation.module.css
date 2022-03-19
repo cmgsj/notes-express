@@ -37,8 +37,7 @@
   padding: 0.5rem 0.75rem;
 }
 
-.menu_button:hover,
-.menu_button:active {
+.menu_button:hover {
   color: #313132;
   background-color: white;
 }
@@ -46,6 +45,11 @@
 .icon {
   padding: 0 0.75rem;
   font-size: 2rem;
+}
+
+.active {
+  color: #313132;
+  background-color: white;
 }
 
 .drawer {

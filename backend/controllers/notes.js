@@ -3,7 +3,6 @@ const User = require('../models/user');
 const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator');
 
 exports.getNotes = async (req, res, next) => {
   const userId = req.userData.userId;
@@ -23,12 +22,11 @@ exports.getNotes = async (req, res, next) => {
 };
 
 exports.createNote = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs, please check your data.', 422));
-  }
   const { title, content } = req.body;
   const userId = req.userData.userId;
+  if (title === '') {
+    title = 'Empty Note';
+  }
   const newNote = new Note({
     title: title,
     content: content,
@@ -60,15 +58,12 @@ exports.createNote = async (req, res, next) => {
 };
 
 exports.updateNote = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
-    );
-  }
   const { title, content } = req.body;
   const noteId = req.params.noteId;
   const userId = req.userData.userId;
+  if (title === '') {
+    title = 'Empty Note';
+  }
   let note;
   try {
     note = await Note.findById(noteId);
@@ -129,12 +124,10 @@ exports.deleteNote = async (req, res, next) => {
 exports.shareNote = async (req, res, next) => {
   const userId = req.userData.userId;
   const { noteId, permission, expiresIn } = req.body;
-  if (permission !== 'READ_ONLY' && permission !== 'READ_WRITE') {
-    return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
-    );
-  }
-  if (expiresIn && !Number.isInteger(expiresIn)) {
+  if (
+    (permission !== 'READ_ONLY' && permission !== 'READ_WRITE') ||
+    (expiresIn && !Number.isInteger(expiresIn))
+  ) {
     return next(
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );

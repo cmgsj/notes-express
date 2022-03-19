@@ -25,12 +25,21 @@ export const fetchLogin = createAsyncThunk(
 
 export const fetchSignup = createAsyncThunk(
   'user/signup',
-  async ({ firstName, lastName, email, password }, thunkAPI) => {
+  async (
+    { firstName, lastName, email, password, confirmedPassword },
+    thunkAPI
+  ) => {
     try {
       const response = await fetch(`${backendURL}/user/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firstName, lastName, email, password }),
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmedPassword,
+        }),
       });
       const responseData = await response.json();
       if (!response.ok) {
@@ -46,12 +55,12 @@ export const fetchSignup = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   'user/resetPassword',
-  async ({ token, password }, thunkAPI) => {
+  async ({ token, password, confirmedPassword }, thunkAPI) => {
     try {
       const response = await fetch(`${backendURL}/reset_password/${token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, confirmedPassword }),
       });
       const responseData = await response.json();
       if (!response.ok) {

@@ -97,8 +97,11 @@ exports.resetPassword = async (req, res, next) => {
       new HttpError('Invalid inputs passed, please check your data.', 422)
     );
   }
-  const { password } = req.body;
+  const { password, confirmedPassword } = req.body;
   const { userId, email, passwordResetToken } = req.userResetPasswordData;
+  if (password !== confirmedPassword) {
+    return next(new HttpError('Passwords must match, plase try again', 422));
+  }
   let existingUser;
   try {
     existingUser = await User.findById(userId);

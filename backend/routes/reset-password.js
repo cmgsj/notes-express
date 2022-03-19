@@ -13,7 +13,10 @@ router.post(
 
 router.post(
   '/:token',
-  check('password').isLength({ min: 8 }),
+  [
+    check('password').isStrongPassword(),
+    check('confirmedPassword').isStrongPassword(),
+  ],
   checkPasswordResetToken,
   passwordResetController.resetPassword
 );
