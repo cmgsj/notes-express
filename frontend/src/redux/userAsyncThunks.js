@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const backendURL = process.env.REACT_APP_BACKEND_URL;
+// const backendURL = process.env.REACT_APP_BACKEND_URL;
+const backendURL = 'http://192.168.0.15:8000/api';
 
 export const fetchLogin = createAsyncThunk(
   'user/login',
@@ -202,6 +203,44 @@ export const shareNote = createAsyncThunk(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ noteId, permission, expiresIn }),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        return responseData;
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getSharedNote = createAsyncThunk(
+  'user/getSharedNote',
+  async ({ token }, thunkAPI) => {
+    try {
+      const response = await fetch(`${backendURL}/shared/${token}`);
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        return responseData;
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateSharedNote = createAsyncThunk(
+  'user/updateSharedNote',
+  async ({ token, title, content }, thunkAPI) => {
+    try {
+      const response = await fetch(`${backendURL}/shared/${token}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content }),
       });
       const responseData = await response.json();
       if (!response.ok) {

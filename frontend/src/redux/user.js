@@ -9,6 +9,8 @@ import {
   editNote,
   deleteNote,
   shareNote,
+  getSharedNote,
+  updateSharedNote,
 } from './userAsyncThunks';
 import getCompareFunction from './getCompareFunction';
 
@@ -22,6 +24,8 @@ const initialState = {
   isLoading: false,
   error: null,
   sharingToken: null,
+  sharedNote: null,
+  sharedNotePermission: null,
 };
 
 const loadingStateHandler = (state) => {
@@ -51,10 +55,6 @@ const userSlice = createSlice({
       localStorage.removeItem('token');
       localStorage.removeItem('tokenExpirationDate');
       return initialState;
-    },
-    setError: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload.message;
     },
     clearError: (state) => {
       state.error = null;
@@ -122,8 +122,8 @@ const userSlice = createSlice({
     [loadNotes.rejected]: errorStateHandler,
     [loadNotes.fulfilled]: (state, action) => {
       const notes = action.payload.notes.reverse();
-      state.notes = notes;
       state.fetchedNotes = notes;
+      state.notes = notes;
       state.isLoading = false;
     },
     // createNote
@@ -131,8 +131,8 @@ const userSlice = createSlice({
     [createNote.rejected]: errorStateHandler,
     [createNote.fulfilled]: (state, action) => {
       const createdNote = action.payload.note;
-      state.notes.unshift(createdNote);
       state.fetchedNotes.unshift(createdNote);
+      state.notes.unshift(createdNote);
       state.isLoading = false;
     },
     // editNote
@@ -140,12 +140,12 @@ const userSlice = createSlice({
     [editNote.rejected]: errorStateHandler,
     [editNote.fulfilled]: (state, action) => {
       const editedNote = action.payload.note;
-      const idx1 = state.notes.findIndex((note) => note.id === editedNote.id);
-      state.notes[idx1] = editedNote;
-      const idx2 = state.fetchedNotes.findIndex(
+      const idx1 = state.fetchedNotes.findIndex(
         (note) => note.id === editedNote.id
       );
-      state.fetchedNotes[idx2] = editedNote;
+      state.fetchedNotes[idx1] = editedNote;
+      const idx2 = state.notes.findIndex((note) => note.id === editedNote.id);
+      state.notes[idx2] = editedNote;
       state.isLoading = false;
     },
     // deleteNote
@@ -153,17 +153,35 @@ const userSlice = createSlice({
     [deleteNote.rejected]: errorStateHandler,
     [deleteNote.fulfilled]: (state, action) => {
       const deletedNoteId = action.payload.noteId;
-      const notes = state.notes.filter((note) => note.id !== deletedNoteId);
-      state.notes = notes;
-      state.fetchedNotes = notes;
+      state.fetchedNotes = state.fetchedNotes.filter(
+        (note) => note.id !== deletedNoteId
+      );
+      state.notes = state.notes.filter((note) => note.id !== deletedNoteId);
       state.isLoading = false;
     },
     // shareNote
     [shareNote.pending]: loadingStateHandler,
     [shareNote.rejected]: errorStateHandler,
     [shareNote.fulfilled]: (state, action) => {
-      state.isLoading = false;
       state.sharingToken = action.payload.token;
+      state.isLoading = false;
+    },
+    //getSharedNote
+    [getSharedNote.pending]: loadingStateHandler,
+    [getSharedNote.rejected]: errorStateHandler,
+    [getSharedNote.fulfilled]: (state, action) => {
+      const { note, permission } = action.payload;
+      state.isLoading = false;
+      state.sharedNote = note;
+      state.sharedNotePermission = permission;
+    },
+    //updateSharedNote
+    [updateSharedNote.pending]: loadingStateHandler,
+    [updateSharedNote.rejected]: errorStateHandler,
+    [updateSharedNote.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      const { note } = action.payload;
+      state.sharedNote = note;
     },
   },
 });

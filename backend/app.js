@@ -30,6 +30,11 @@ app.use(
   })
 );
 
+//delay
+app.use((req, res, next) => {
+  setTimeout(() => next(), 1000);
+});
+
 app.use('/api/notes', notesRoutes);
 app.use('/api/user', usersRoutes);
 app.use('/api/shared', sharedNotesRoutes);

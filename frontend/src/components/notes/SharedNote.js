@@ -1,9 +1,9 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import EditNoteForm from '../forms/EditNoteForm';
 import Card from '../UI/Card';
 import styles from './SharedNote.module.css';
 
-const ReadWriteNote = (props) => {
+const SharedNote = (props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleIsEditingHandler = () => {
@@ -17,7 +17,7 @@ const ReadWriteNote = (props) => {
 
   return (
     <div className={styles.container}>
-      {isEditing ? (
+      {!props.readOnly && isEditing ? (
         <EditNoteForm
           onCancel={toggleIsEditingHandler}
           onSubmit={submitEditNoteHandler}
@@ -28,13 +28,15 @@ const ReadWriteNote = (props) => {
         <Card className={styles.note}>
           <h1>{props.title}</h1>
           <p>{props.content}</p>
-          <div className={styles.buttons}>
-            <button onClick={toggleIsEditingHandler}>✏️</button>
-          </div>
+          {!props.readOnly && (
+            <div className={styles.buttons}>
+              <button onClick={toggleIsEditingHandler}>✏️</button>
+            </div>
+          )}
         </Card>
       )}
     </div>
   );
 };
 
-export default ReadWriteNote;
+export default SharedNote;

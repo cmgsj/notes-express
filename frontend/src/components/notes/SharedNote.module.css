@@ -26,21 +26,6 @@
   overflow-y: auto;
 }
 
-.dates {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-bottom: 0.75rem;
-  margin-top: -0.5rem;
-}
-
-.dates span {
-  font-size: small;
-  font-weight: bold;
-  color: rgb(49, 49, 50, 0.75);
-  margin: 0.1rem;
-}
-
 .note p {
   margin: 1rem;
   border: none;
@@ -66,5 +51,5 @@
 
 .buttons button:hover {
   font-size: 1.5rem;
-  margin-top: -0.75rem;
+  margin-top: -0.7rem;
 }

@@ -35,6 +35,11 @@ const ShareNoteForm = (props) => {
     setExpirationTime(event.target.value);
   };
 
+  const cancelFormHandler = () => {
+    dispatch(clearSharingToken());
+    props.onCancel();
+  };
+
   const submitFormHandler = (event) => {
     event.preventDefault();
     if (hasExpirationTime) {
@@ -61,6 +66,7 @@ const ShareNoteForm = (props) => {
               <input
                 type='number'
                 min='1'
+                max='99'
                 value={expirationTime}
                 onChange={expirationTimeChangeHandler}
               />
@@ -89,10 +95,10 @@ const ShareNoteForm = (props) => {
           />
         )}
         <div>
-          <FormButton cancel onClick={props.onCancel}>
+          <FormButton cancel onClick={cancelFormHandler}>
             cancel
           </FormButton>
-          {sharingToken ? (
+          {sharingToken && isSubmitted ? (
             <FormButton onClick={copyUrlToClipboardHandler}>
               copy url
             </FormButton>
