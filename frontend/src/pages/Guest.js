@@ -63,7 +63,7 @@ const Guest = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.note}>
+      <div>
         {readOnlyNote && (
           <ReadOnlyNote
             title={readOnlyNote.title}

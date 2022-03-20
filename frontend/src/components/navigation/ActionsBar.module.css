@@ -5,7 +5,8 @@
   height: 2.5rem;
   margin-top: 3.5rem;
   position: fixed;
-  background-color: rgb(244, 244, 246, 0.9);
+  backdrop-filter: blur(0.25rem);
+  background-color: rgb(245, 245, 247, 0.1);
   padding: 0.5rem;
 }
 

@@ -27,12 +27,20 @@ exports.getNote = async (req, res, next) => {
 
 exports.updateNote = async (req, res, next) => {
   const { userId, noteId, permission } = req.sharingData;
-  const { title, content } = req.body;
+  let { title, content } = req.body;
   if (permission !== 'READ_WRITE') {
     return next(new HttpError('Updating note not allowed.', 401));
   }
   if (title === '') {
-    title = 'Empty Note';
+    if (content === '') {
+      title = 'Empty Note';
+      content = ' ';
+    } else {
+      title = 'Untitled';
+    }
+  }
+  if (content === '') {
+    content = ' ';
   }
   let note;
   try {

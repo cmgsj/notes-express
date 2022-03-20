@@ -22,10 +22,18 @@ exports.getNotes = async (req, res, next) => {
 };
 
 exports.createNote = async (req, res, next) => {
-  const { title, content } = req.body;
+  let { title, content } = req.body;
   const userId = req.userData.userId;
   if (title === '') {
-    title = 'Empty Note';
+    if (content === '') {
+      title = 'Empty Note';
+      content = ' ';
+    } else {
+      title = 'Untitled';
+    }
+  }
+  if (content === '') {
+    content = ' ';
   }
   const newNote = new Note({
     title: title,
@@ -58,11 +66,19 @@ exports.createNote = async (req, res, next) => {
 };
 
 exports.updateNote = async (req, res, next) => {
-  const { title, content } = req.body;
+  let { title, content } = req.body;
   const noteId = req.params.noteId;
   const userId = req.userData.userId;
   if (title === '') {
-    title = 'Empty Note';
+    if (content === '') {
+      title = 'Empty Note';
+      content = ' ';
+    } else {
+      title = 'Untitled';
+    }
+  }
+  if (content === '') {
+    content = ' ';
   }
   let note;
   try {

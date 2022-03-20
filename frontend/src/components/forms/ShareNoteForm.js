@@ -9,6 +9,7 @@ const ShareNoteForm = (props) => {
   const [hasExpirationTime, setHasExpirationTime] = useState(false);
   const [expirationTime, setExpirationTime] = useState('24');
   const [selectedPermission, setSelectedPermission] = useState('READ_ONLY');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const dispatch = useDispatch();
   const { clearSharingToken } = userActions;
@@ -21,7 +22,7 @@ const ShareNoteForm = (props) => {
   const copyUrlToClipboardHandler = async () => {
     const url = urlRef.current.value;
     await navigator.clipboard.writeText(url);
-    alert('URL copied to clipboard.');
+    alert('URL Copied To clipboard');
     props.onCancel();
     dispatch(clearSharingToken());
   };
@@ -41,38 +42,44 @@ const ShareNoteForm = (props) => {
     } else {
       props.onSubmit(selectedPermission);
     }
+    setIsSubmitted(true);
   };
 
   return (
-    <form className={styles.form} onSubmit={submitFormHandler}>
-      <div className={styles.exp}>
-        <label>Expiration</label>
-        <input type='checkbox' onChange={toggleHasExpirationTimeHandler} />
-        {hasExpirationTime && (
-          <div>
-            <input
-              className={styles.exp_time}
-              type='number'
-              min='0'
-              value={expirationTime}
-              onChange={expirationTimeChangeHandler}
-            />
-            <label>hours</label>
-          </div>
-        )}
-      </div>
-      <div>
-        <label>Permission</label>
-        <select
-          value={selectedPermission}
-          onChange={selectedPermissionChangeHandler}
-        >
-          <option value='READ_ONLY'>Read Only</option>
-          <option value='READ_WRITE'>Read and Write</option>
-        </select>
-      </div>
-      {sharingToken && (
-        <div>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={submitFormHandler}>
+        <label>Share</label>
+        <div className={styles.field}>
+          <label>Expiration</label>
+          <input
+            className={styles.checkbox}
+            type='checkbox'
+            onChange={toggleHasExpirationTimeHandler}
+          />
+          {hasExpirationTime && (
+            <div className={styles.expiration}>
+              <input
+                type='number'
+                min='1'
+                value={expirationTime}
+                onChange={expirationTimeChangeHandler}
+              />
+              <label>hours</label>
+            </div>
+          )}
+        </div>
+        <div className={styles.field}>
+          <label>Permission</label>
+          <select
+            className={styles.permissions}
+            value={selectedPermission}
+            onChange={selectedPermissionChangeHandler}
+          >
+            <option value='READ_ONLY'>Read Only</option>
+            <option value='READ_WRITE'>Read and Write</option>
+          </select>
+        </div>
+        {sharingToken && (
           <input
             className={styles.url}
             type='text'
@@ -80,16 +87,21 @@ const ShareNoteForm = (props) => {
             readOnly
             ref={urlRef}
           />
-          <FormButton onClick={copyUrlToClipboardHandler}>copy url</FormButton>
+        )}
+        <div>
+          <FormButton cancel onClick={props.onCancel}>
+            cancel
+          </FormButton>
+          {sharingToken ? (
+            <FormButton onClick={copyUrlToClipboardHandler}>
+              copy url
+            </FormButton>
+          ) : (
+            <FormButton type='submit'>share</FormButton>
+          )}
         </div>
-      )}
-      <div>
-        <FormButton cancel onClick={props.onCancel}>
-          cancel
-        </FormButton>
-        <FormButton type='submit'>share</FormButton>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

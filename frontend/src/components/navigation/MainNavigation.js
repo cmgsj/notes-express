@@ -49,10 +49,12 @@ const MainNavigation = () => {
   return (
     <header className={styles.header}>
       <div className={styles.menu}>
-        <h2 className={styles.text} onClick={goToHomeHandler}>
-          Notes Express
-        </h2>
-        {isLoggedIn && (
+        {!window.matchMedia('(display-mode: standalone)').matches && (
+          <h2 className={styles.text} onClick={goToHomeHandler}>
+            Notes Express
+          </h2>
+        )}
+        {window.matchMedia('(display-mode: standalone)').matches && (
           <div>
             <button
               className={`${styles.menu_button} ${styles.icon}`}
@@ -64,24 +66,27 @@ const MainNavigation = () => {
               className={`${styles.menu_button} ${styles.icon}`}
               onClick={goBackHandler}
             >
-              {'<'}
+              {'⇽'}
             </button>
             <button
               className={`${styles.menu_button} ${styles.icon}`}
               onClick={goForthHandler}
             >
-              {'>'}
+              {'⇾'}
             </button>
+          </div>
+        )}
+        {isLoggedIn && (
+          <div>
             <button
-              className={`${styles.menu_button} ${styles.icon} ${
-                showDrawer && styles.active
-              }`}
+              className={`${styles.menu_button} ${showDrawer && styles.active}`}
               onClick={toggleDrawerHandler}
             >
               {showDrawer ? '×' : '≡'}
             </button>
           </div>
         )}
+
         {!isLoggedIn && (
           <div>
             {path !== '/sign_in' && (
@@ -105,12 +110,6 @@ const MainNavigation = () => {
       </div>
       <SideDrawer show={showDrawer} onClick={closeDrawerHandler}>
         <div className={styles.drawer}>
-          <button>Home</button>
-          <button>Profile</button>
-          <button>Shared with me</button>
-          <button>Share</button>
-          <button>Settings</button>
-          <button>About</button>
           <button onClick={logoutHandler}>Logout</button>
         </div>
       </SideDrawer>
