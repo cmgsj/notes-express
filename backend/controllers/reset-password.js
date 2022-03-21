@@ -39,7 +39,7 @@ exports.sendPasswordResetCode = async (req, res, next) => {
           email: existingUser.email,
           passwordResetToken: token,
         },
-        process.env.JWT_KEY,
+        process.env.JWT_ACCESS_TOKEN_KEY,
         { expiresIn: '1h' }
       );
     } catch (error) {
@@ -153,11 +153,21 @@ exports.resetPassword = async (req, res, next) => {
     );
   }
   let token;
+  let refreshToken;
   try {
     token = jwt.sign(
-      { userId: existingUser.id, email: existingUser.email },
-      process.env.JWT_KEY,
-      { expiresIn: '1h' }
+      { userId: existingUser.id },
+      process.env.JWT_ACCESS_TOKEN_KEY,
+      {
+        expiresIn: '1h',
+      }
+    );
+    refreshToken = jwt.sign(
+      { userId: existingUser.id },
+      process.env.JWT_REFRESH_TOKEN_KEY,
+      {
+        expiresIn: '1d',
+      }
     );
   } catch (error) {
     return next(new HttpError('Logging in failed, please try again.', 500));
@@ -165,6 +175,7 @@ exports.resetPassword = async (req, res, next) => {
   res.status(200).json({
     message: 'Passord reset succesfully.',
     userId: existingUser.id,
-    token: token,
+    token,
+    refreshToken,
   });
 };

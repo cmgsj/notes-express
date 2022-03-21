@@ -7,10 +7,9 @@ module.exports = (req, res, next) => {
   }
   try {
     const token = req.params.token;
-    if (!token) {
-      throw new HttpError('Authentication failed.', 401);
-    }
-    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+    if (!token) throw new Error();
+    const decodedToken = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_KEY);
+    if (!decodedToken) throw new Error();
     req.userResetPasswordData = {
       userId: decodedToken.userId,
       email: decodedToken.email,

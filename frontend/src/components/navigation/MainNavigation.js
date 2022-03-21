@@ -27,7 +27,6 @@ const MainNavigation = () => {
 
   const goToHomeHandler = () => {
     history.push('/');
-    console.log(window.screen.width);
   };
 
   const goToSignInHandler = () => {

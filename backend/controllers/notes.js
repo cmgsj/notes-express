@@ -15,7 +15,7 @@ exports.getNotes = async (req, res, next) => {
   if (!user) {
     return next(new HttpError('User not found.', 404));
   }
-  res.json({
+  res.status(200).json({
     message: 'Notes fetched succesfully.',
     notes: user.notes.map((note) => note.toObject({ getters: true })),
   });
@@ -89,7 +89,7 @@ exports.updateNote = async (req, res, next) => {
     );
   }
   if (note.author.toString() !== userId) {
-    return next(new HttpError('Update note not allowed.', 401));
+    return next(new HttpError('Update note not allowed.', 403));
   }
   note.title = title;
   note.content = content;
@@ -120,7 +120,7 @@ exports.deleteNote = async (req, res, next) => {
     return next(new HttpError('Could not find note for this id.', 404));
   }
   if (note.author.id !== userId) {
-    return next(new HttpError('Delete note not allowed.', 401));
+    return next(new HttpError('Delete note not allowed.', 403));
   }
   try {
     const session = await mongoose.startSession();
@@ -166,7 +166,7 @@ exports.shareNote = async (req, res, next) => {
           noteId: noteId,
           permission: permission,
         },
-        process.env.JWT_KEY,
+        process.env.JWT_ACCESS_TOKEN_KEY,
         { expiresIn: `${expiresIn}h` }
       );
     } else {
@@ -176,11 +176,13 @@ exports.shareNote = async (req, res, next) => {
           noteId: noteId,
           permission: permission,
         },
-        process.env.JWT_KEY
+        process.env.JWT_ACCESS_TOKEN_KEY
       );
     }
   } catch (error) {
     return next(new HttpError('Sharing note failed, please try again.', 500));
   }
-  res.json({ message: 'Sharing token succesfully created.', token: token });
+  res
+    .status(200)
+    .json({ message: 'Sharing token succesfully created.', token: token });
 };

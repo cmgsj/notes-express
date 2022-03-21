@@ -1,6 +1,7 @@
 const express = require('express');
 const { check } = require('express-validator');
 const usersController = require('../controllers/users');
+const checkAuth = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -20,6 +21,17 @@ router.post(
   usersController.signup
 );
 
-router.post('/login', usersController.login);
+router.post(
+  '/login',
+  [check('email').normalizeEmail().isEmail()],
+  usersController.login
+);
+
+router.post(
+  '/refresh_token',
+  [check('refreshToken').isJWT()],
+  checkAuth,
+  usersController.refreshToken
+);
 
 module.exports = router;

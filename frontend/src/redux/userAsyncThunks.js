@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { userActions } from './user';
 
-// const backendURL = process.env.REACT_APP_BACKEND_URL;
-const backendURL = 'http://192.168.0.15:8000/api';
+const backendURL = process.env.REACT_APP_BACKEND_URL;
+// const backendURL = 'http://192.168.0.15:8000/api';
 
 export const fetchLogin = createAsyncThunk(
   'user/login',
@@ -14,10 +15,9 @@ export const fetchLogin = createAsyncThunk(
       });
       const responseData = await response.json();
       if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
         throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -44,10 +44,34 @@ export const fetchSignup = createAsyncThunk(
       });
       const responseData = await response.json();
       if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
         throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      } else return responseData;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchResetToken = createAsyncThunk(
+  'user/resetToken',
+  async (args, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().user.token;
+      const refreshToken = thunkAPI.getState().user.refreshToken;
+      const response = await fetch(`${backendURL}/user/refresh_token`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refreshToken }),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -64,11 +88,8 @@ export const resetPassword = createAsyncThunk(
         body: JSON.stringify({ password, confirmedPassword }),
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -85,11 +106,8 @@ export const sendPasswordResetLink = createAsyncThunk(
         body: JSON.stringify({ email }),
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -101,18 +119,12 @@ export const loadNotes = createAsyncThunk(
   async (args, thunkAPI) => {
     try {
       const token = thunkAPI.getState().user.token;
-      if (!token) {
-        throw new Error('Not authenticated.');
-      }
       const response = await fetch(`${backendURL}/notes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -133,11 +145,8 @@ export const createNote = createAsyncThunk(
         body: JSON.stringify(note),
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -159,11 +168,8 @@ export const editNote = createAsyncThunk(
         body: JSON.stringify({ title, content }),
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -180,11 +186,8 @@ export const deleteNote = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -205,11 +208,8 @@ export const shareNote = createAsyncThunk(
         body: JSON.stringify({ noteId, permission, expiresIn }),
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -222,11 +222,8 @@ export const getSharedNote = createAsyncThunk(
     try {
       const response = await fetch(`${backendURL}/shared/${token}`);
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -243,11 +240,8 @@ export const updateSharedNote = createAsyncThunk(
         body: JSON.stringify({ title, content }),
       });
       const responseData = await response.json();
-      if (!response.ok) {
-        throw new Error(responseData.message);
-      } else {
-        return responseData;
-      }
+      if (!response.ok) throw new Error(responseData.message);
+      else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

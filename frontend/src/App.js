@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { userActions } from './redux/user';
+import { fetchResetToken } from './redux/userAsyncThunks';
 import LoadingSpinner from './components/UI/LoadingSpinner';
 import ErrorModal from './components/UI/ErrorModal';
 const Home = lazy(() => import('./pages/Home'));
@@ -31,22 +32,28 @@ const App = () => {
     if (token && tokenExpirationDate) {
       const remainingTime =
         new Date(tokenExpirationDate).getTime() - new Date().getTime();
-      logoutTimer = setTimeout(() => dispatch(logout()), remainingTime);
+      // logoutTimer = setTimeout(() => dispatch(logout()), remainingTime);
+      logoutTimer = setTimeout(
+        () => dispatch(fetchResetToken()),
+        remainingTime
+      );
     } else {
       clearTimeout(logoutTimer);
     }
-  }, [dispatch, token, logout, tokenExpirationDate]);
+  }, [dispatch, token, tokenExpirationDate]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refreshToken');
     const tokenExpirationDate = localStorage.getItem('tokenExpirationDate');
     if (
       token &&
+      refreshToken &&
       tokenExpirationDate &&
       new Date(tokenExpirationDate) > new Date()
     ) {
       const expirationDate = new Date(tokenExpirationDate).toISOString();
-      dispatch(login({ token, expirationDate }));
+      dispatch(login({ token, refreshToken, expirationDate }));
     }
   }, [dispatch, login]);
 

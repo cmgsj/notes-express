@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchLogin,
   fetchSignup,
+  fetchResetToken,
   resetPassword,
   sendPasswordResetLink,
   loadNotes,
@@ -18,6 +19,7 @@ const initialState = {
   userId: null,
   token: null,
   tokenExpirationDate: null,
+  refreshToken: null,
   isLoggedIn: false,
   fetchedNotes: [],
   notes: [],
@@ -41,18 +43,21 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     login: (state, action) => {
-      const { token, expirationDate } = action.payload;
+      const { token, refreshToken, expirationDate } = action.payload;
       const tokenExpirationDate =
         expirationDate ||
         new Date(new Date().getTime() + 1000 * 60 * 60).toISOString();
       state.token = token;
+      if (refreshToken) state.refreshToken = refreshToken;
       state.tokenExpirationDate = tokenExpirationDate;
       state.isLoggedIn = true;
       localStorage.setItem('token', token);
+      localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('tokenExpirationDate', tokenExpirationDate);
     },
     logout: () => {
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('tokenExpirationDate');
       return initialState;
     },
@@ -82,34 +87,48 @@ const userSlice = createSlice({
     [fetchLogin.pending]: loadingStateHandler,
     [fetchLogin.rejected]: errorStateHandler,
     [fetchLogin.fulfilled]: (state, action) => {
-      const { userId, token } = action.payload;
+      const { userId, token, refreshToken } = action.payload;
       state.userId = userId;
       state.isLoading = false;
-      if (token) {
-        userSlice.caseReducers.login(state, { payload: { token } });
-      }
+      if (token)
+        userSlice.caseReducers.login(state, {
+          payload: { token, refreshToken },
+        });
     },
     // signup
     [fetchSignup.pending]: loadingStateHandler,
     [fetchSignup.rejected]: errorStateHandler,
     [fetchSignup.fulfilled]: (state, action) => {
-      const { userId, token } = action.payload;
+      const { userId, token, refreshToken } = action.payload;
       state.userId = userId;
       state.isLoading = false;
-      if (token) {
-        userSlice.caseReducers.login(state, { payload: { token } });
-      }
+      if (token)
+        userSlice.caseReducers.login(state, {
+          payload: { token, refreshToken },
+        });
+    },
+    //fetchResetToken
+    [fetchResetToken.pending]: loadingStateHandler,
+    [fetchResetToken.rejected]: errorStateHandler,
+    [fetchResetToken.fulfilled]: (state, action) => {
+      const { token } = action.payload;
+      state.isLoading = false;
+      if (token)
+        userSlice.caseReducers.login(state, {
+          payload: { token, refreshToken: state.refreshToken },
+        });
     },
     //resetPassword
     [resetPassword.pending]: loadingStateHandler,
     [resetPassword.rejected]: errorStateHandler,
     [resetPassword.fulfilled]: (state, action) => {
-      const { userId, token } = action.payload;
+      const { userId, token, refreshToken } = action.payload;
       state.userId = userId;
       state.isLoading = false;
-      if (token) {
-        userSlice.caseReducers.login(state, { payload: { token } });
-      }
+      if (token)
+        userSlice.caseReducers.login(state, {
+          payload: { token, refreshToken },
+        });
     },
     //sendPasswordResetLink
     [sendPasswordResetLink.pending]: loadingStateHandler,

@@ -4,7 +4,7 @@ const HttpError = require('../models/http-error');
 exports.getNote = async (req, res, next) => {
   const { userId, noteId, permission } = req.sharingData;
   if (permission !== 'READ_ONLY' && permission !== 'READ_WRITE') {
-    return next(new HttpError('Viewing note not allowed.', 401));
+    return next(new HttpError('Viewing note not allowed.', 403));
   }
   let note;
   try {
@@ -16,9 +16,9 @@ exports.getNote = async (req, res, next) => {
     return next(new HttpError('Note not found.', 404));
   }
   if (note.author.toString() !== userId) {
-    return next(new HttpError('View note not allowed.', 401));
+    return next(new HttpError('View note not allowed.', 403));
   }
-  res.json({
+  res.status(200).json({
     message: 'Note fetched succesfully,',
     note: { title: note.title, content: note.content },
     permission,
@@ -29,7 +29,7 @@ exports.updateNote = async (req, res, next) => {
   const { userId, noteId, permission } = req.sharingData;
   let { title, content } = req.body;
   if (permission !== 'READ_WRITE') {
-    return next(new HttpError('Updating note not allowed.', 401));
+    return next(new HttpError('Updating note not allowed.', 403));
   }
   if (title === '') {
     if (content === '') {
@@ -51,7 +51,7 @@ exports.updateNote = async (req, res, next) => {
     );
   }
   if (note.author.toString() !== userId) {
-    return next(new HttpError('Update note not allowed.', 401));
+    return next(new HttpError('Update note not allowed.', 403));
   }
   note.title = title;
   note.content = content;
