@@ -6,15 +6,15 @@
 
 ## Screenshots
 
-<img src='./screenshots/login.png' height='350' width='350' /> <img src='./screenshots/signup.png' height='350' width='350' />
-<img src='./screenshots/loading.png' height='350' width='350' /> <img src='./screenshots/error.png' height='350' width='350' />
-<img src='./screenshots/home.png' height='350' width='350' /> <img src='./screenshots/new-note.png' height='350' width='350' />
-<img src='./screenshots/edit.png' height='350' width='350' /> <img src='./screenshots/delete.png' height='350' width='350' />
-<img src='./screenshots/dates.png' height='350' width='350' /> <img src='./screenshots/share.png' height='350' width='350' />
-<img src='./screenshots/copy-url.png' height='350' width='350' /> <img src='./screenshots/url-copied.png' height='350' width='350' />
-<img src='./screenshots/search.png' height='350' width='350' /> <img src='./screenshots/no-notes-found.png' height='350' width='350' />
-<img src='./screenshots/side-drawer.png' height='350' width='350' /> <img src='./screenshots/reset-password.png' height='350' width='350' />
-<img src='./screenshots/reset-password-done.png' height='350' width='350' /> <img src='./screenshots/new-password.png' height='350' width='350' />
+<img src='./screenshots/login.png' height='400' width='400' /> <img src='./screenshots/signup.png' height='400' width='400' />
+<img src='./screenshots/loading.png' height='400' width='400' /> <img src='./screenshots/error.png' height='400' width='400' />
+<img src='./screenshots/home.png' height='400' width='400' /> <img src='./screenshots/new-note.png' height='400' width='400' />
+<img src='./screenshots/edit.png' height='400' width='400' /> <img src='./screenshots/delete.png' height='400' width='400' />
+<img src='./screenshots/dates.png' height='400' width='400' /> <img src='./screenshots/share.png' height='400' width='400' />
+<img src='./screenshots/copy-url.png' height='400' width='400' /> <img src='./screenshots/url-copied.png' height='400' width='400' />
+<img src='./screenshots/search.png' height='400' width='400' /> <img src='./screenshots/no-notes-found.png' height='400' width='400' />
+<img src='./screenshots/side-drawer.png' height='400' width='400' /> <img src='./screenshots/reset-password.png' height='400' width='400' />
+<img src='./screenshots/reset-password-done.png' height='400' width='400' /> <img src='./screenshots/new-password.png' height='400' width='400' />
 
 ## Features
 
