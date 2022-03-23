@@ -13,7 +13,7 @@ const ActionBar = (props) => {
       }`}
       onClick={clickHandler}
     >
-      {props.active ? '×' : '+'} 
+      {props.active ? '×' : '+'}
     </button>
   );
 };

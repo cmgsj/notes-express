@@ -46,7 +46,7 @@ const userSlice = createSlice({
       const { token, refreshToken, expirationDate } = action.payload;
       const tokenExpirationDate =
         expirationDate ||
-        new Date(new Date().getTime() + 1000 * 60 * 60).toISOString();
+        new Date(new Date().getTime() + 1000 * 60 * 57).toISOString();
       state.token = token;
       if (refreshToken) state.refreshToken = refreshToken;
       state.tokenExpirationDate = tokenExpirationDate;

@@ -26,13 +26,12 @@ const App = () => {
   const dispatch = useDispatch();
   const { token, tokenExpirationDate, isLoggedIn, isLoading, error } =
     useSelector((state) => state.user);
-  const { login, logout, clearError } = userActions;
+  const { login, clearError } = userActions;
 
   useEffect(() => {
     if (token && tokenExpirationDate) {
       const remainingTime =
         new Date(tokenExpirationDate).getTime() - new Date().getTime();
-      // logoutTimer = setTimeout(() => dispatch(logout()), remainingTime);
       logoutTimer = setTimeout(
         () => dispatch(fetchResetToken()),
         remainingTime

@@ -10,10 +10,12 @@ const DeleteNoteForm = (props) => {
   return (
     <form className={styles.form} onSubmit={submitFormHandler}>
       <h3>Are you sure you want to delete?</h3>
-      <FormButton cancel onClick={props.onCancel}>
-        No
-      </FormButton>
-      <FormButton type='submit'>Yes</FormButton>
+      <div>
+        <FormButton cancel onClick={props.onCancel}>
+          No
+        </FormButton>
+        <FormButton type='submit'>Yes</FormButton>
+      </div>
     </form>
   );
 };

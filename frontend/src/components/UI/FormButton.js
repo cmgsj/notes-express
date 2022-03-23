@@ -3,9 +3,8 @@ import styles from './FormButton.module.css';
 const FormButton = (props) => {
   return (
     <button
-      className={`${styles.formButton} ${
-        props.cancel ? styles.cancelButton : styles.submitButton
-      } ${props.className}`}
+      className={`${styles.formButton} ${props.className}`}
+      title={props.title}
       type={props.type || 'button'}
       onClick={props.onClick}
     >

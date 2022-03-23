@@ -3,6 +3,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../redux/user';
 import SideDrawer from '../UI/SideDrawer';
+import MenuIcon from '../../assets/menu-burger-free-icon-font-white.svg';
+import CancelIcon from '../../assets/cross-small-free-icon-font.svg';
+import HomeIcon from '../../assets/home-free-icon-font-white.svg';
+import ArrowLeftIcon from '../../assets/arrow-left-free-icon-font-white.svg';
+import ArrowRightIcon from '../../assets/arrow-right-free-icon-font-white.svg';
 import styles from './MainNavigation.module.css';
 
 const MainNavigation = () => {
@@ -59,29 +64,60 @@ const MainNavigation = () => {
               className={`${styles.menu_button} ${styles.icon}`}
               onClick={goToHomeHandler}
             >
-              {'⌂'}
+              <img
+                src={HomeIcon}
+                alt='cancel icon'
+                width='20px'
+                height='20px'
+              />
             </button>
             <button
               className={`${styles.menu_button} ${styles.icon}`}
               onClick={goBackHandler}
             >
-              {'⇽'}
+              <img
+                src={ArrowLeftIcon}
+                alt='cancel icon'
+                width='20px'
+                height='20px'
+              />
             </button>
             <button
               className={`${styles.menu_button} ${styles.icon}`}
               onClick={goForthHandler}
             >
-              {'⇾'}
+              <img
+                src={ArrowRightIcon}
+                alt='cancel icon'
+                width='20px'
+                height='20px'
+              />
             </button>
           </div>
         )}
         {isLoggedIn && (
           <div>
             <button
-              className={`${styles.menu_button} ${showDrawer && styles.active}`}
+              className={`${styles.menu_button}  ${styles.icon} ${
+                showDrawer && styles.active
+              }`}
               onClick={toggleDrawerHandler}
             >
-              {showDrawer ? '×' : '≡'}
+              {showDrawer ? (
+                <img
+                  src={CancelIcon}
+                  alt='cancel icon'
+                  width='20px'
+                  height='20px'
+                />
+              ) : (
+                <img
+                  src={MenuIcon}
+                  alt='cancel icon'
+                  width='20px'
+                  height='20px'
+                />
+              )}
             </button>
           </div>
         )}

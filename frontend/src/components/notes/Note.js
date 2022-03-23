@@ -1,10 +1,15 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editNote, shareNote, deleteNote } from '../../redux/userAsyncThunks';
 import EditNoteForm from '../forms/EditNoteForm';
 import ShareNoteForm from '../forms/ShareNoteForm';
 import DeleteNoteForm from '../forms/DeleteNoteForm';
 import Card from '../UI/Card';
+import ShareIcon from '../../assets/share-free-icon-font.svg';
+import DeleteIcon from '../../assets/trash-free-icon-font.svg';
+import EditIcon from '../../assets/pencil-free-icon-font.svg';
+import CalendarIcon from '../../assets/calendar-free-icon-font-empty.svg';
+import CancelIcon from '../../assets/cross-small-free-icon-font.svg';
 import styles from './Note.module.css';
 
 const Note = (props) => {
@@ -53,10 +58,47 @@ const Note = (props) => {
           <p>{props.content}</p>
           {!(isDeleting || isSharing) && (
             <div className={styles.buttons}>
-              <button onClick={toggleShowDatesHandler}>●●●</button>
-              <button onClick={toggleIsEditingHandler}>✏️</button>
-              <button onClick={toggleIsSharingHandler}>↗️</button>
-              <button onClick={toggleIsDeletingHandler}>❌</button>
+              <button onClick={toggleShowDatesHandler}>
+                {showDates ? (
+                  <img
+                    src={CancelIcon}
+                    alt='share icon'
+                    width='20px'
+                    height='20px'
+                  />
+                ) : (
+                  <img
+                    src={CalendarIcon}
+                    alt='share icon'
+                    width='20px'
+                    height='20px'
+                  />
+                )}
+              </button>
+              <button onClick={toggleIsEditingHandler}>
+                <img
+                  src={EditIcon}
+                  alt='share icon'
+                  width='20px'
+                  height='20px'
+                />
+              </button>
+              <button onClick={toggleIsSharingHandler}>
+                <img
+                  src={ShareIcon}
+                  alt='share icon'
+                  width='20px'
+                  height='20px'
+                />
+              </button>
+              <button onClick={toggleIsDeletingHandler}>
+                <img
+                  src={DeleteIcon}
+                  alt='delete icon'
+                  width='20px'
+                  height='20px'
+                />
+              </button>
             </div>
           )}
           {showDates && (

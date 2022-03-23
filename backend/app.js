@@ -30,9 +30,9 @@ app.use(
   })
 );
 
-//delay
+// delay
 app.use((req, res, next) => {
-  setTimeout(() => next(), 1000);
+  setTimeout(() => next(), 500);
 });
 
 app.use('/api/notes', notesRoutes);

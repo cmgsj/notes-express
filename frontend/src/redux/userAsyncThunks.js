@@ -88,8 +88,10 @@ export const resetPassword = createAsyncThunk(
         body: JSON.stringify({ password, confirmedPassword }),
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -106,8 +108,10 @@ export const sendPasswordResetLink = createAsyncThunk(
         body: JSON.stringify({ email }),
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -123,8 +127,10 @@ export const loadNotes = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -168,8 +174,10 @@ export const editNote = createAsyncThunk(
         body: JSON.stringify({ title, content }),
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -186,8 +194,10 @@ export const deleteNote = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -208,8 +218,10 @@ export const shareNote = createAsyncThunk(
         body: JSON.stringify({ noteId, permission, expiresIn }),
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -222,8 +234,10 @@ export const getSharedNote = createAsyncThunk(
     try {
       const response = await fetch(`${backendURL}/shared/${token}`);
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -240,8 +254,10 @@ export const updateSharedNote = createAsyncThunk(
         body: JSON.stringify({ title, content }),
       });
       const responseData = await response.json();
-      if (!response.ok) throw new Error(responseData.message);
-      else return responseData;
+      if (!response.ok) {
+        if (response.status === 401) thunkAPI.dispatch(userActions.logout());
+        throw new Error(responseData.message);
+      } else return responseData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

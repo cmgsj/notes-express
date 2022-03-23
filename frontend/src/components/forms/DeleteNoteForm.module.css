@@ -1,7 +1,11 @@
 .form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   text-align: center;
 }
 
 .form h3 {
-  margin: 0 auto;
+  margin-top: auto;
+  margin-bottom: auto;
 }

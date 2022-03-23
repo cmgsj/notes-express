@@ -6,7 +6,7 @@ import styles from './ShareNoteForm.module.css';
 
 const ShareNoteForm = (props) => {
   const urlRef = useRef();
-  const [hasExpirationTime, setHasExpirationTime] = useState(false);
+  const [hasExpirationTime, setHasExpirationTime] = useState(true);
   const [expirationTime, setExpirationTime] = useState('24');
   const [selectedPermission, setSelectedPermission] = useState('READ_ONLY');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -52,40 +52,55 @@ const ShareNoteForm = (props) => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={submitFormHandler}>
-        <label>Share</label>
-        <div className={styles.field}>
-          <label>Expiration</label>
-          <input
-            className={styles.checkbox}
-            type='checkbox'
-            onChange={toggleHasExpirationTimeHandler}
-          />
-          {hasExpirationTime && (
-            <div className={styles.expiration}>
+      {!isSubmitted && (
+        <form className={styles.form} onSubmit={submitFormHandler}>
+          <label>Share Note</label>
+          <div className={styles.fields}>
+            <div className={styles.field}>
+              <label>Expiration</label>
               <input
-                type='number'
-                min='1'
-                max='99'
-                value={expirationTime}
-                onChange={expirationTimeChangeHandler}
+                className={styles.checkbox}
+                type='checkbox'
+                defaultChecked
+                onChange={toggleHasExpirationTimeHandler}
               />
-              <label>hours</label>
+              {hasExpirationTime && (
+                <div className={styles.expiration}>
+                  <input
+                    type='number'
+                    min='1'
+                    max='99'
+                    value={expirationTime}
+                    onChange={expirationTimeChangeHandler}
+                  />
+                  <label>hours</label>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div className={styles.field}>
-          <label>Permission</label>
-          <select
-            className={styles.permissions}
-            value={selectedPermission}
-            onChange={selectedPermissionChangeHandler}
-          >
-            <option value='READ_ONLY'>Read Only</option>
-            <option value='READ_WRITE'>Read and Write</option>
-          </select>
-        </div>
-        {sharingToken && (
+            <div className={styles.field}>
+              <label>Permission</label>
+              <select
+                className={styles.permissions}
+                value={selectedPermission}
+                onChange={selectedPermissionChangeHandler}
+              >
+                <option value='READ_ONLY'>Read Only</option>
+                <option value='READ_WRITE'>Read and Write</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <FormButton title='cance' onClick={cancelFormHandler}>
+              Cancel
+            </FormButton>
+            <FormButton type='submit' title='submit'>
+              Share
+            </FormButton>
+          </div>
+        </form>
+      )}
+      {isSubmitted && (
+        <div className={styles.urlSection}>
           <input
             className={styles.url}
             type='text'
@@ -93,20 +108,10 @@ const ShareNoteForm = (props) => {
             readOnly
             ref={urlRef}
           />
-        )}
-        <div>
-          <FormButton cancel onClick={cancelFormHandler}>
-            cancel
-          </FormButton>
-          {sharingToken && isSubmitted ? (
-            <FormButton onClick={copyUrlToClipboardHandler}>
-              copy url
-            </FormButton>
-          ) : (
-            <FormButton type='submit'>share</FormButton>
-          )}
+          <FormButton onClick={copyUrlToClipboardHandler}>Copy</FormButton>
+          <FormButton onClick={cancelFormHandler}>Cancel</FormButton>
         </div>
-      </form>
+      )}
     </div>
   );
 };

@@ -1,10 +1,12 @@
 {
   "name": "Notes-Express",
-  "short_name": "Notes-Express",
+  "short_name": "Notes",
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "display": "standalone",
-  "start_url": ".",
+  "scope": "/",
+  "start_url": "/",
+  "prefer_related_applications": true,
   "icons": [
     {
       "src": "./maskable.png",
