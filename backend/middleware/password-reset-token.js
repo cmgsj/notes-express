@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const HttpError = require('../models/http-error');
+const HTTPError = require('../models/HTTPError');
+const { StatusCodes } = require('http-status-codes');
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {
@@ -17,6 +18,8 @@ module.exports = (req, res, next) => {
     };
     next();
   } catch (error) {
-    return next(new HttpError('Authentication failed.', 403));
+    return next(
+      new HTTPError('Authentication failed.', StatusCodes.UNAUTHORIZED)
+    );
   }
 };

@@ -1,4 +1,5 @@
-const HttpError = require('../models/http-error');
+const HTTPError = require('../models/HTTPError');
+const { StatusCodes } = require('http-status-codes');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
@@ -11,7 +12,10 @@ exports.sendPasswordResetCode = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
+      new HTTPError(
+        'Invalid inputs passed, please check your data.',
+        StatusCodes.UNPROCESSABLE_ENTITY
+      )
     );
   }
   const { email } = req.body;
@@ -20,7 +24,10 @@ exports.sendPasswordResetCode = async (req, res, next) => {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
     return next(
-      new HttpError('Sending code failed, please try again later.', 500)
+      new HTTPError(
+        'Sending code failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   if (existingUser) {
@@ -44,12 +51,18 @@ exports.sendPasswordResetCode = async (req, res, next) => {
       );
     } catch (error) {
       return next(
-        new HttpError('Sending code failed, please try again later.', 500)
+        new HTTPError(
+          'Sending code failed, please try again later.',
+          StatusCodes.INTERNAL_SERVER_ERROR
+        )
       );
     }
     if (!hashedResetToken || !jwtToken) {
       return next(
-        new HttpError('Sending code failed, please try again later.', 500)
+        new HTTPError(
+          'Sending code failed, please try again later.',
+          StatusCodes.INTERNAL_SERVER_ERROR
+        )
       );
     }
     existingUser.passwordResetToken = hashedResetToken;
@@ -57,7 +70,10 @@ exports.sendPasswordResetCode = async (req, res, next) => {
       await existingUser.save();
     } catch (error) {
       return next(
-        new HttpError('Sending code failed, please try again later.', 500)
+        new HTTPError(
+          'Sending code failed, please try again later.',
+          StatusCodes.INTERNAL_SERVER_ERROR
+        )
       );
     }
     let transporter = nodemailer.createTransport({
@@ -81,38 +97,56 @@ exports.sendPasswordResetCode = async (req, res, next) => {
       to reset your Notes-Express password.</p>`,
     };
     // transporter.sendMail(mailOptions, (error, data) => {
-    //   if (error) {
-    //     return next(new HttpError('Could not send email.', 500));
-    //   }
+    //   if (error)
+    //     return next(
+    //       new HTTPError(
+    //         'Could not send email.',
+    //         StatusCodes.INTERNAL_SERVER_ERROR
+    //       )
+    //     );
     // });
     console.log(`http://localhost:3000/reset_password/${jwtToken}`);
   }
-  res.status(200).json({ message: 'Passord reset code sent.' });
+  res.status(StatusCodes.OK).json({ message: 'Passord reset code sent.' });
 };
 
 exports.resetPassword = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
-      new HttpError('Invalid inputs passed, please check your data.', 422)
+      new HTTPError(
+        'Invalid inputs passed, please check your data.',
+        StatusCodes.UNPROCESSABLE_ENTITY
+      )
     );
   }
   const { password, confirmedPassword } = req.body;
   const { userId, email, passwordResetToken } = req.userResetPasswordData;
   if (password !== confirmedPassword) {
-    return next(new HttpError('Passwords must match, plase try again', 422));
+    return next(
+      new HTTPError(
+        'Passwords must match, plase try again',
+        StatusCodes.UNPROCESSABLE_ENTITY
+      )
+    );
   }
   let existingUser;
   try {
     existingUser = await User.findById(userId);
   } catch (err) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   if (!existingUser || existingUser.email !== email) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   let isValidResetToken = false;
@@ -123,12 +157,18 @@ exports.resetPassword = async (req, res, next) => {
     );
   } catch (error) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   if (!isValidResetToken) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   let hashedPassword;
@@ -136,12 +176,18 @@ exports.resetPassword = async (req, res, next) => {
     hashedPassword = await bcrypt.hash(password, 12);
   } catch (error) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   if (!hashedPassword) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   existingUser.password = hashedPassword;
@@ -149,7 +195,10 @@ exports.resetPassword = async (req, res, next) => {
     await existingUser.save();
   } catch (error) {
     return next(
-      new HttpError('Reseting password failed, please try again later.', 500)
+      new HTTPError(
+        'Reseting password failed, please try again later.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
   let token;
@@ -170,9 +219,14 @@ exports.resetPassword = async (req, res, next) => {
       }
     );
   } catch (error) {
-    return next(new HttpError('Logging in failed, please try again.', 500));
+    return next(
+      new HTTPError(
+        'Logging in failed, please try again.',
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    );
   }
-  res.status(200).json({
+  res.status(StatusCodes.OK).json({
     message: 'Passord reset succesfully.',
     userId: existingUser.id,
     token,

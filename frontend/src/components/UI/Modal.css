@@ -5,6 +5,7 @@
   left: 10%;
   width: 80%;
   background: rgb(250, 250, 250);
+  border-radius: 15px;
 }
 
 .modal__header {
